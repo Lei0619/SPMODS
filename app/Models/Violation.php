@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\ViolationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Violation extends Model
 {
-    /** @use HasFactory<\Database\Factories\ViolationFactory> */
+    /** @use HasFactory<ViolationFactory> */
     use HasFactory;
 
     protected $fillable = [

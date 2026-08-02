@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Driver;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Driver>
+ * @extends Factory<Driver>
  */
 class DriverFactory extends Factory
 {
-    protected $model = \App\Models\Driver::class;
+    protected $model = Driver::class;
 
     public function definition(): array
     {

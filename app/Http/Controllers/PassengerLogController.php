@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\PassengerLog;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 
 class PassengerLogController extends Controller
 {
