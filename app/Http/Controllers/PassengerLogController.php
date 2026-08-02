@@ -12,7 +12,10 @@ class PassengerLogController extends Controller
      */
     public function index(): mixed
     {
-        return PassengerLog::all();
+        return PassengerLog::with([
+            'passengerlog',
+            'trip',
+        ])->get();
     }
 
     /**

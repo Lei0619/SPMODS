@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTripRequest;
 use Illuminate\Http\Request;
+use App\Models\Trip;
 
 class TripController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(): mixed
     {
-        //
+        return Trip::with([
+            'vehicle',
+            'passengerLogs',
+            'violations',
+        ])->get();
     }
 
     /**
@@ -25,17 +31,19 @@ class TripController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(StoreTripRequest $request): mixed
     {
-        //
+        $trip = Trip::create($request->validated());
+
+        return response()->json(['message' => 'Trip created successfully', 'trip' => $trip], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id): void
+    public function show(Trip $trip): mixed
     {
-        //
+        return response()->json($trip);
     }
 
     /**
@@ -57,8 +65,9 @@ class TripController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void
+    public function destroy(Trip $trip): mixed
     {
-        //
+        $trip->delete();
+        return response()->json(['message' => 'Trip deleted successfully']);
     }
 }

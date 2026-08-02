@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
             $table->integer('allowed_capacity');
             $table->integer('actual_capacity');
-            $table->string('violation_type');
+            $table->enum('violation_type', ['overLoad', 'sensorFailure', 'unauthorizedStopping']);
             $table->timestamp('violation_time')->useCurrent();
             $table->timestamps();
         });

@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
+use App\Models\Vehicle;
 
 class VehicleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(): mixed
     {
-        //
+        return Vehicle::with([
+            'driver',
+            'transportRoute',
+        ])->get();
     }
 
     /**
@@ -25,17 +30,24 @@ class VehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(StoreVehicleRequest $request): mixed
     {
-        //
+        $vehicle = Vehicle::create($request->validated());
+
+        return response()->json(['message' => 'Vehicle created successfully', 'vehicle' => $vehicle], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id): void
+    public function show(Vehicle $vehicle): mixed
     {
-        //
+        $vehicle->load([
+            'driver',
+            'transportRoute',
+        ]);
+
+        return response()->json($vehicle);
     }
 
     /**
@@ -49,16 +61,20 @@ class VehicleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void
+    public function update(UpdateVehicleRequest $request, Vehicle $vehicle): mixed
     {
-        //
+        $vehicle->update($request->validated());
+
+        return response()->json(['message' => 'Vehicle updated successfully', 'vehicle' => $vehicle]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void
+    public function destroy(Vehicle $vehicle): mixed
     {
-        //
+        $vehicle->delete();
+
+        return response()->json(['message' => 'Vehicle deleted successfully']);
     }
 }
