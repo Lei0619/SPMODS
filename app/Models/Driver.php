@@ -27,6 +27,12 @@ class Driver extends Model
         return $this->hasOne(Vehicle::class);
     }
 
+    /** @return HasMany<Vehicle, $this> */
+    public function vehicles(): HasMany
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
     /** @return HasMany<Violation, $this> */
     public function violations(): HasMany
     {

@@ -29,4 +29,10 @@ class PassengerLog extends Model
     {
         return $this->belongsTo(Vehicle::class);
     }
+
+    /** @return BelongsTo<Trip, $this> */
+    public function passengerlog(): BelongsTo
+    {
+        return $this->trip();
+    }
 }
