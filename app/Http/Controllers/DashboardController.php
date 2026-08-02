@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Vehicle;
 use App\Models\Driver;
-use App\Models\Trip;
-use App\Models\Violation;
 use App\Models\Notification;
+use App\Models\Trip;
+use App\Models\Vehicle;
+use App\Models\Violation;
+use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function index(): mixed

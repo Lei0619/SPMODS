@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Violation;
 use App\Http\Requests\StoreViolationRequest;
 use App\Http\Requests\UpdateViolationRequest;
+use App\Models\Violation;
 
 class ViolationController extends Controller
 {

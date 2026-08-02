@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\TransportRoute;
 use App\Http\Requests\StoreTransportRouteRequest;
 use App\Http\Requests\UpdateTransportRouteRequest;
+use App\Models\TransportRoute;
 
 class TransportRouteController extends Controller
 {

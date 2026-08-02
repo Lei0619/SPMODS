@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTripRequest;
-use Illuminate\Http\Request;
 use App\Models\Trip;
+use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
@@ -68,6 +68,7 @@ class TripController extends Controller
     public function destroy(Trip $trip): mixed
     {
         $trip->delete();
+
         return response()->json(['message' => 'Trip deleted successfully']);
     }
 }
