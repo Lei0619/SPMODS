@@ -14,7 +14,7 @@ class DriverController extends Controller
     public function index(): mixed
     {
         return Driver::with([
-            'vehicles',
+            'vehicle',
             'violations',
         ])->get();
     }
@@ -43,7 +43,7 @@ class DriverController extends Controller
     public function show(Driver $driver): mixed
     {
         $driver->load([
-            'vehicles',
+            'vehicle',
             'violations',
         ]);
 

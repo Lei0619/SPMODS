@@ -13,7 +13,6 @@ class PassengerLogController extends Controller
     public function index(): mixed
     {
         return PassengerLog::with([
-            'passengerlog',
             'trip',
         ])->get();
     }
@@ -21,7 +20,10 @@ class PassengerLogController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(PassengerLog $request): void {}
+    public function create(PassengerLog $request): void
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,12 +38,11 @@ class PassengerLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): mixed
+    public function show(PassengerLog $passengerLog): mixed
     {
-        $passengerLog = PassengerLog::find($id);
-        if (! $passengerLog) {
-            return response()->json(['message' => 'Passenger log not found'], 404);
-        }
+        $passengerLog->load([
+            'trip',
+        ]);
 
         return response()->json($passengerLog);
     }
