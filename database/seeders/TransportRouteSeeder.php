@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\TransportRoute;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TransportRouteSeeder extends Seeder

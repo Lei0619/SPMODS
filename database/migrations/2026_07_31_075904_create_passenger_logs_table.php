@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-Schema::create('passenger_logs', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('trip_id')
-          ->constrained()
-          ->cascadeOnDelete();
+        Schema::create('passenger_logs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('trip_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-    $table->foreignId('vehicle_id')
-          ->constrained()
-          ->cascadeOnDelete();
-    $table->integer('passenger_count');
-    $table->integer('available_seats');
-    $table->boolean('is_full')->default(false);
-    $table->enum('status', ['Available', 'Full'])->default('Available');
-    $table->timestamps();
-});
+            $table->foreignId('vehicle_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->integer('passenger_count');
+            $table->integer('available_seats');
+            $table->boolean('is_full')->default(false);
+            $table->enum('status', ['Available', 'Full'])->default('Available');
+            $table->timestamps();
+        });
     }
 
     /**

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('arrival_time')->nullable();
             $table->enum('status', [
                 'Active',
-                'Completed'
+                'Completed',
             ]);
             $table->timestamps();
         });

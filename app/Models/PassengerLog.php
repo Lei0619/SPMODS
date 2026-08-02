@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PassengerLog extends Model
 {
@@ -17,12 +18,14 @@ class PassengerLog extends Model
         'status',
     ];
 
-    public function trip()
+    /** @return BelongsTo<Trip, $this> */
+    public function trip(): BelongsTo
     {
         return $this->belongsTo(Trip::class);
     }
 
-    public function vehicle()
+    /** @return BelongsTo<Vehicle, $this> */
+    public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);
     }

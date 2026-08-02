@@ -1,12 +1,14 @@
 <?php
+
 require 'vendor/autoload.php';
 $app = require 'bootstrap/app.php';
-$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+$kernel = $app->make(Kernel::class);
 $kernel->bootstrap();
 
 use App\Models\Driver;
 use App\Models\TransportRoute;
 use App\Models\Vehicle;
+use Illuminate\Contracts\Console\Kernel;
 
 $driver = Driver::firstOrCreate(
     ['license_number' => 'ABC123'],

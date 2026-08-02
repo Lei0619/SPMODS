@@ -12,12 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('passenger_logs')) {
+        if (! Schema::hasTable('passenger_logs')) {
             return;
         }
 
         Schema::table('passenger_logs', function (Blueprint $table) {
-            if (!Schema::hasColumn('passenger_logs', 'trip_id')) {
+            if (! Schema::hasColumn('passenger_logs', 'trip_id')) {
                 $table->foreignIdFor(Trip::class)->constrained()->cascadeOnDelete();
             }
         });
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (!Schema::hasTable('passenger_logs')) {
+        if (! Schema::hasTable('passenger_logs')) {
             return;
         }
 

@@ -25,7 +25,7 @@ return new class extends Migration
                 'available',
                 'on_trip',
                 'maintenance',
-                'offline'
+                'offline',
             ])->default('available');
 
             $table->timestamps();

@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Violation extends Model
 {
+    /** @use HasFactory<\Database\Factories\ViolationFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -19,17 +21,20 @@ class Violation extends Model
         'violation_time',
     ];
 
-    public function trip()
+    /** @return BelongsTo<Trip, $this> */
+    public function trip(): BelongsTo
     {
         return $this->belongsTo(Trip::class);
     }
 
-    public function vehicle()
+    /** @return BelongsTo<Vehicle, $this> */
+    public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function driver()
+    /** @return BelongsTo<Driver, $this> */
+    public function driver(): BelongsTo
     {
         return $this->belongsTo(Driver::class);
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Notification extends Model
 {
@@ -14,7 +15,8 @@ class Notification extends Model
         'is_read',
     ];
 
-    public function vehicle()
+    /** @return BelongsTo<Vehicle, $this> */
+    public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);
     }

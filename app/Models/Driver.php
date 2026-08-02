@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Driver extends Model
 {
+    /** @use HasFactory<\Database\Factories\DriverFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -18,12 +20,14 @@ class Driver extends Model
         'status',
     ];
 
-    public function vehicle()
+    /** @return HasOne<Vehicle, $this> */
+    public function vehicle(): HasOne
     {
         return $this->hasOne(Vehicle::class);
     }
 
-    public function violations()
+    /** @return HasMany<Violation, $this> */
+    public function violations(): HasMany
     {
         return $this->hasMany(Violation::class);
     }

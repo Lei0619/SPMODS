@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): mixed
     {
         return User::all();
     }
@@ -21,7 +21,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -29,7 +29,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): mixed
     {
         $user = User::create([
             'name' => $request->input('name'),
@@ -44,7 +44,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): mixed
     {
         return response()->json($user);
     }
@@ -52,7 +52,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): void
     {
         //
     }
@@ -60,30 +60,31 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
-{
-    $data = $request->validated();
+    public function update(UpdateUserRequest $request, User $user): mixed
+    {
+        $data = $request->validated();
 
-    if ($request->filled('password')) {
-        $data['password'] = Hash::make($request->password);
-    } else {
-        unset($data['password']);
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        } else {
+            unset($data['password']);
+        }
+
+        $user->update($data);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user,
+        ]);
     }
-
-    $user->update($data);
-
-    return response()->json([
-        'message' => 'User updated successfully',
-        'user' => $user
-    ]);
-}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): mixed
     {
         $user->delete();
+
         return response()->json(['message' => 'User deleted successfully']);
     }
 }

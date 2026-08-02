@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Driver;
 use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
+use App\Models\Driver;
+use Illuminate\Http\RedirectResponse;
 
 class DriverController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): mixed
     {
         return Driver::all();
     }
@@ -19,7 +20,7 @@ class DriverController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -27,16 +28,17 @@ class DriverController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDriverRequest $request)
+    public function store(StoreDriverRequest $request): mixed
     {
         $driver = Driver::create($request->validated());
+
         return response()->json($driver, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Driver $driver)
+    public function show(Driver $driver): mixed
     {
         return $driver;
     }
@@ -44,7 +46,7 @@ class DriverController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): void
     {
         //
     }
@@ -52,18 +54,20 @@ class DriverController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDriverRequest $request, Driver $driver)
+    public function update(UpdateDriverRequest $request, Driver $driver): mixed
     {
         $driver->update($request->validated());
+
         return response()->json($driver);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Driver $driver)
+    public function destroy(Driver $driver): mixed
     {
         $driver->delete();
+
         return response()->json(null, 204);
     }
 }

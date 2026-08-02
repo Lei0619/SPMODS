@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vehicle extends Model
 {
+    /** @use HasFactory<\Database\Factories\VehicleFactory> */
     use HasFactory;
 
     public $table = 'vehicles';
+
     protected $fillable = [
         'plate_number',
         'vehicle_type',
@@ -20,32 +24,38 @@ class Vehicle extends Model
         'status',
     ];
 
-    public function notifications()
+    /** @return HasMany<Notification, $this> */
+    public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class);
     }
 
-    public function user()
+    /** @return BelongsTo<User, $this> */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function driver()
+    /** @return BelongsTo<Driver, $this> */
+    public function driver(): BelongsTo
     {
         return $this->belongsTo(Driver::class);
     }
 
-    public function transportRoute()
+    /** @return BelongsTo<TransportRoute, $this> */
+    public function transportRoute(): BelongsTo
     {
         return $this->belongsTo(TransportRoute::class, 'route_id');
     }
 
-    public function trips()
+    /** @return HasMany<Trip, $this> */
+    public function trips(): HasMany
     {
         return $this->hasMany(Trip::class);
     }
 
-    public function violations()
+    /** @return HasMany<Violation, $this> */
+    public function violations(): HasMany
     {
         return $this->hasMany(Violation::class);
     }

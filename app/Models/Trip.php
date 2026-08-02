@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Trip extends Model
 {
+    /** @use HasFactory<\Database\Factories\TripFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -17,22 +20,26 @@ class Trip extends Model
         'status',
     ];
 
-    public function vehicle()
+    /** @return BelongsTo<Vehicle, $this> */
+    public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function passengerLogs()
+    /** @return HasMany<PassengerLog, $this> */
+    public function passengerLogs(): HasMany
     {
         return $this->hasMany(PassengerLog::class);
     }
 
-    public function passengers()
+    /** @return HasMany<PassengerLog, $this> */
+    public function passengers(): HasMany
     {
         return $this->passengerLogs();
     }
 
-    public function violations()
+    /** @return HasMany<Violation, $this> */
+    public function violations(): HasMany
     {
         return $this->hasMany(Violation::class);
     }

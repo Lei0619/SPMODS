@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Violation;
+use Illuminate\Database\Seeder;
 
 class ViolationSeeder extends Seeder
 {
