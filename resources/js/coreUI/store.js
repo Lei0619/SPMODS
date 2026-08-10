@@ -7,7 +7,7 @@
  * @module store
  */
 
-import { legacy_createStore as createStore } from 'redux'
+import { legacy_createStore as createStore } from 'redux';
 
 /**
  * Initial state for the Redux store
@@ -16,9 +16,9 @@ import { legacy_createStore as createStore } from 'redux'
  * @property {string} theme - Current theme mode ('light', 'dark', or 'auto')
  */
 const initialState = {
-  sidebarShow: true,
-  theme: 'light',
-}
+    sidebarShow: true,
+    theme: 'light',
+};
 
 /**
  * Root reducer function that handles all state changes
@@ -42,17 +42,17 @@ const initialState = {
  * dispatch({ type: 'set', sidebarShow: true, theme: 'light' })
  */
 const changeState = (state = initialState, { type, ...rest }) => {
-  switch (type) {
-    case 'set':
-      return { ...state, ...rest }
-    default:
-      return state
-  }
-}
+    switch (type) {
+        case 'set':
+            return { ...state, ...rest };
+        default:
+            return state;
+    }
+};
 
 /**
  * Redux store instance
  * @type {import('redux').Store}
  */
-const store = createStore(changeState)
-export default store
+const store = createStore(changeState);
+export default store;

@@ -8,8 +8,8 @@ import {
     CFormSelect,
 } from '@coreui/react';
 import { router } from '@inertiajs/react';
-import { useState   } from 'react';
-import type {ChangeEvent, FormEvent} from 'react';
+import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 export default function CreateVehicle() {
     const [form, setForm] = useState({
@@ -64,8 +64,7 @@ export default function CreateVehicle() {
                 console.error(data);
 
                 alert(
-                    data.message ??
-                        'There was an error creating the vehicle.',
+                    data.message ?? 'There was an error creating the vehicle.',
                 );
 
                 return;
@@ -110,9 +109,7 @@ export default function CreateVehicle() {
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">
-                                    Select vehicle type
-                                </option>
+                                <option value="">Select vehicle type</option>
                                 <option value="bus">Bus</option>
                                 <option value="van">Van</option>
                                 <option value="jeepney">Jeepney</option>
@@ -175,9 +172,7 @@ export default function CreateVehicle() {
                                 value={form.status}
                                 onChange={handleChange}
                             >
-                                <option value="available">
-                                    Available
-                                </option>
+                                <option value="available">Available</option>
                                 <option value="on_trip">On Trip</option>
                                 <option value="offline">Offline</option>
                             </CFormSelect>
@@ -189,9 +184,7 @@ export default function CreateVehicle() {
                                 color="primary"
                                 disabled={loading}
                             >
-                                {loading
-                                    ? 'Creating...'
-                                    : 'Create Vehicle'}
+                                {loading ? 'Creating...' : 'Create Vehicle'}
                             </CButton>
 
                             <CButton

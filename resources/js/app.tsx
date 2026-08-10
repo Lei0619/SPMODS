@@ -38,9 +38,7 @@ createInertiaApp({
                 <div style={{ padding: '40px' }}>
                     <h1>SPMods + CoreUI Test</h1>
 
-                    <CButton color="primary">
-                        CoreUI is working 🎉
-                    </CButton>
+                    <CButton color="primary">CoreUI is working 🎉</CButton>
                 </div>
 
                 {/* Your normal Inertia application */}

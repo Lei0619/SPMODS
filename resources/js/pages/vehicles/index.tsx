@@ -1,4 +1,4 @@
-import { CCard, CCardBody, CCardHeader, CTable } from '@coreui/react'
+import { CCard, CCardBody, CCardHeader, CTable } from '@coreui/react';
 
 export default function Vehicles() {
     return (
@@ -29,5 +29,5 @@ export default function Vehicles() {
                 </CTable>
             </CCardBody>
         </CCard>
-    )
+    );
 }
