@@ -1,5 +1,3 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
-import { router } from '@inertiajs/react';
 import {
     CButton,
     CCard,
@@ -9,6 +7,9 @@ import {
     CFormInput,
     CFormSelect,
 } from '@coreui/react';
+import { router } from '@inertiajs/react';
+import { useState   } from 'react';
+import type {ChangeEvent, FormEvent} from 'react';
 
 export default function CreateVehicle() {
     const [form, setForm] = useState({

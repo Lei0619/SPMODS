@@ -1,3 +1,4 @@
+import { CButton } from '@coreui/react';
 import { createInertiaApp } from '@inertiajs/react';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -5,7 +6,6 @@ import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { CButton } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
