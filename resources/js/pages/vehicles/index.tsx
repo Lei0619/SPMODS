@@ -61,8 +61,7 @@ export default function VehicleIndex({ vehicles }: Props) {
                 console.error(data);
 
                 alert(
-                    data.message ??
-                        'There was an error deleting the vehicle.',
+                    data.message ?? 'There was an error deleting the vehicle.',
                 );
 
                 return;
@@ -86,9 +85,7 @@ export default function VehicleIndex({ vehicles }: Props) {
                 <strong>Vehicles</strong>
 
                 <Link href="/vehicles/create">
-                    <CButton color="primary">
-                        Add Vehicle
-                    </CButton>
+                    <CButton color="primary">Add Vehicle</CButton>
                 </Link>
             </CCardHeader>
 
@@ -96,46 +93,28 @@ export default function VehicleIndex({ vehicles }: Props) {
                 <CTable hover responsive bordered>
                     <CTableHead>
                         <CTableRow>
-                            <CTableHeaderCell>
-                                ID
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>ID</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Plate Number
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Plate Number</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Type
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Type</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Capacity
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Capacity</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Driver
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Driver</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Route
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Route</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Status
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Status</CTableHeaderCell>
 
-                            <CTableHeaderCell>
-                                Actions
-                            </CTableHeaderCell>
+                            <CTableHeaderCell>Actions</CTableHeaderCell>
                         </CTableRow>
                     </CTableHead>
 
                     <CTableBody>
                         {vehicles.map((vehicle) => (
                             <CTableRow key={vehicle.id}>
-                                <CTableDataCell>
-                                    {vehicle.id}
-                                </CTableDataCell>
+                                <CTableDataCell>{vehicle.id}</CTableDataCell>
 
                                 <CTableDataCell>
                                     {vehicle.plate_number}
@@ -167,13 +146,8 @@ export default function VehicleIndex({ vehicles }: Props) {
 
                                 <CTableDataCell>
                                     {/* EDIT BUTTON */}
-                                    <Link
-                                        href={`/vehicles/${vehicle.id}/edit`}
-                                    >
-                                        <CButton
-                                            color="warning"
-                                            size="sm"
-                                        >
+                                    <Link href={`/vehicles/${vehicle.id}/edit`}>
+                                        <CButton color="warning" size="sm">
                                             Edit
                                         </CButton>
                                     </Link>
@@ -184,9 +158,7 @@ export default function VehicleIndex({ vehicles }: Props) {
                                         color="danger"
                                         size="sm"
                                         className="ms-1"
-                                        onClick={() =>
-                                            setDeleteId(vehicle.id)
-                                        }
+                                        onClick={() => setDeleteId(vehicle.id)}
                                     >
                                         Delete
                                     </CButton>
@@ -204,9 +176,7 @@ export default function VehicleIndex({ vehicles }: Props) {
                                                 size="sm"
                                                 className="ms-2"
                                                 onClick={() =>
-                                                    handleDelete(
-                                                        vehicle.id,
-                                                    )
+                                                    handleDelete(vehicle.id)
                                                 }
                                             >
                                                 Yes

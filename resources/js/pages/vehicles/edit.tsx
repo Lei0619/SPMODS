@@ -67,12 +67,8 @@ export default function EditVehicle({ vehicle }: Props) {
                     vehicle_type: form.vehicle_type,
                     max_capacity: Number(form.max_capacity),
                     device_id: form.device_id || null,
-                    driver_id: form.driver_id
-                        ? Number(form.driver_id)
-                        : null,
-                    route_id: form.route_id
-                        ? Number(form.route_id)
-                        : null,
+                    driver_id: form.driver_id ? Number(form.driver_id) : null,
+                    route_id: form.route_id ? Number(form.route_id) : null,
                     status: form.status,
                 }),
             });
@@ -83,8 +79,7 @@ export default function EditVehicle({ vehicle }: Props) {
                 console.error(data);
 
                 alert(
-                    data.message ??
-                        'There was an error updating the vehicle.',
+                    data.message ?? 'There was an error updating the vehicle.',
                 );
 
                 return;
@@ -127,9 +122,7 @@ export default function EditVehicle({ vehicle }: Props) {
                             onChange={handleChange}
                             required
                         >
-                            <option value="">
-                                Select vehicle type
-                            </option>
+                            <option value="">Select vehicle type</option>
                             <option value="bus">Bus</option>
                             <option value="van">Van</option>
                             <option value="jeepney">Jeepney</option>
@@ -187,13 +180,9 @@ export default function EditVehicle({ vehicle }: Props) {
                             value={form.status}
                             onChange={handleChange}
                         >
-                            <option value="available">
-                                Available
-                            </option>
+                            <option value="available">Available</option>
                             <option value="on_trip">On Trip</option>
-                            <option value="maintenance">
-                                Maintenance
-                            </option>
+                            <option value="maintenance">Maintenance</option>
                             <option value="offline">Offline</option>
                         </CFormSelect>
                     </div>
@@ -204,18 +193,14 @@ export default function EditVehicle({ vehicle }: Props) {
                             color="primary"
                             disabled={loading}
                         >
-                            {loading
-                                ? 'Updating...'
-                                : 'Update Vehicle'}
+                            {loading ? 'Updating...' : 'Update Vehicle'}
                         </CButton>
 
                         <CButton
                             type="button"
                             color="secondary"
                             disabled={loading}
-                            onClick={() =>
-                                router.visit('/vehicles')
-                            }
+                            onClick={() => router.visit('/vehicles')}
                         >
                             Cancel
                         </CButton>
