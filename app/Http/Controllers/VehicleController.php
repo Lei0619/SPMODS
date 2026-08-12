@@ -45,14 +45,14 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle): mixed
     {
-            $vehicle->load([
-                'driver',
-                'transportRoute',
-            ]);
+        $vehicle->load([
+            'driver',
+            'transportRoute',
+        ]);
 
-            return Inertia::render('vehicles/show', [
-                'vehicle' => $vehicle,
-            ]);
+        return Inertia::render('vehicles/show', [
+            'vehicle' => $vehicle,
+        ]);
     }
 
     /**
