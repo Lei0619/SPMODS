@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Vehicle\StoreVehicleRequest;
 use App\Http\Requests\Vehicle\UpdateVehicleRequest;
 use App\Models\Vehicle;
+use Inertia\Inertia;
 
 class VehicleController extends Controller
 {
@@ -13,10 +14,12 @@ class VehicleController extends Controller
      */
     public function index(): mixed
     {
-        return Vehicle::with([
-            'driver',
-            'transportRoute',
-        ])->get();
+        return Inertia::render('vehicles/index', [
+            'vehicles' => Vehicle::with([
+                'driver',
+                'transportRoute',
+            ])->get(),
+        ]);
     }
 
     /**
@@ -42,20 +45,29 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle): mixed
     {
-        $vehicle->load([
-            'driver',
-            'transportRoute',
-        ]);
+            $vehicle->load([
+                'driver',
+                'transportRoute',
+            ]);
 
-        return response()->json($vehicle);
+            return Inertia::render('vehicles/show', [
+                'vehicle' => $vehicle,
+            ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): void
+    public function edit(Vehicle $vehicle): mixed
     {
-        //
+        $vehicle->load([
+            'driver',
+            'transportRoute',
+        ]);
+
+        return Inertia::render('vehicles/edit', [
+            'vehicle' => $vehicle,
+        ]);
     }
 
     /**
