@@ -22,5 +22,7 @@ Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
 
 Route::get('/drivers', [DriverController::class, 'index'])
     ->name('drivers.index');
+Route::get('/drivers/{driver}', [DriverController::class, 'show'])
+    ->name('drivers.show');
 
 require __DIR__.'/settings.php';

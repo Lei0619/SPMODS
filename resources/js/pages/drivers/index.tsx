@@ -146,14 +146,11 @@ export default function DriverIndex({ drivers }: Props) {
                                         : 'N/A'}
                                 </CTableDataCell>
 
-                                {/* FIRST NAME */}
+                                {/* FIRST NAME, LAST NAME */}
                                 <CTableDataCell>
-                                    {driver.first_name}
-                                </CTableDataCell>
-
-                                {/* LAST NAME */}
-                                <CTableDataCell>
-                                    {driver.last_name}
+                                    <Link href={`/drivers/${driver.id}`}>
+                                        {driver.first_name} {driver.last_name}
+                                    </Link>
                                 </CTableDataCell>
 
                                 {/* LICENSE NUMBER */}
