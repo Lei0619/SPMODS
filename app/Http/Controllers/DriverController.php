@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
 use App\Models\Driver;
+use Inertia\Inertia;
 
 class DriverController extends Controller
 {
@@ -13,10 +14,12 @@ class DriverController extends Controller
      */
     public function index(): mixed
     {
-        return Driver::with([
-            'vehicle',
-            'violations',
-        ])->get();
+        return Inertia::render('drivers/index', [
+            'drivers' => Driver::with([
+                'vehicle',
+                'violations',
+            ])->get(),
+        ]);
     }
 
     /**
@@ -47,15 +50,24 @@ class DriverController extends Controller
             'violations',
         ]);
 
-        return response()->json($driver);
+        return Inertia::render('drivers/show', [
+            'driver' => $driver,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): void
+    public function edit(Driver $driver): mixed
     {
-        //
+        $driver->load([
+            'vehicle',
+            'violations',
+        ]);
+
+        return Inertia::render('drivers/edit', [
+            'driver' => $driver,
+        ]);
     }
 
     /**
@@ -75,6 +87,6 @@ class DriverController extends Controller
     {
         $driver->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Driver deleted successfully'], 204);
     }
 }

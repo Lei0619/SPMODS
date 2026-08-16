@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,5 +19,8 @@ Route::get('/vehicles/create', function () {
 })->name('vehicles.create');
 Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
     ->name('vehicles.edit');
+
+Route::get('/drivers', [DriverController::class, 'index'])
+    ->name('drivers.index');
 
 require __DIR__.'/settings.php';
