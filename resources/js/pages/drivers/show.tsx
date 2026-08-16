@@ -38,14 +38,9 @@ export default function DriverShow({ driver }: Props) {
             ) : (
                 driver.violations.map((violation) => (
                     <div key={violation.id}>
-                        <p>
-                            Type: {violation.violation_type}
-                        </p>
+                        <p>Type: {violation.violation_type}</p>
 
-                        <p>
-                            Allowed Capacity:{' '}
-                            {violation.allowed_capacity}
-                        </p>
+                        <p>Allowed Capacity: {violation.allowed_capacity}</p>
                     </div>
                 ))
             )}
