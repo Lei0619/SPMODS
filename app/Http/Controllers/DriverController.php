@@ -25,9 +25,9 @@ class DriverController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create(): mixed
     {
-        //
+        return Inertia::render('drivers/create');
     }
 
     /**
