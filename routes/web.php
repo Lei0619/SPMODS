@@ -24,6 +24,8 @@ Route::get('/drivers', [DriverController::class, 'index'])
     ->name('drivers.index');
 Route::get('/drivers/create', [DriverController::class, 'create'])
     ->name('drivers.create');
+Route::get('/drivers/{driver}/edit', [DriverController::class, 'edit'])
+    ->name('drivers.edit');
 Route::get('/drivers/{driver}', [DriverController::class, 'show'])
     ->name('drivers.show');
 
