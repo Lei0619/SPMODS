@@ -1,3 +1,6 @@
+import { readdirSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+
 import inertia from '@inertiajs/vite';
 import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import tailwindcss from '@tailwindcss/vite';
@@ -6,13 +9,36 @@ import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig } from 'vite';
 
+const collectTsxEntries = (dir: string): string[] => {
+    const entries: string[] = [];
+
+    for (const name of readdirSync(dir)) {
+        const fullPath = join(dir, name);
+        const stat = statSync(fullPath);
+
+        if (stat.isDirectory()) {
+            entries.push(...collectTsxEntries(fullPath));
+
+            continue;
+        }
+
+        if (name.endsWith('.tsx')) {
+            entries.push(fullPath.replace(/\\/g, '/'));
+        }
+    }
+
+    return entries;
+};
+
+const pageEntries = collectTsxEntries('resources/js/pages');
+
 export default defineConfig({
     plugins: [
         laravel({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.tsx',
-                'resources/js/pages/**/*.tsx',
+                ...pageEntries,
             ],
             refresh: true,
             fonts: [
