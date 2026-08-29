@@ -20,21 +20,23 @@ class UpdateDriverRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(): array
-    {
-        return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+   public function rules(): array
+{
+    return [
+        'first_name' => 'required|string|max:255',
 
-            'license_number' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('drivers', 'license_number')->ignore($this->driver),
-            ],
+        'last_name' => 'required|string|max:255',
 
-            'phone_number' => 'required|string|max:20',
-            'status' => 'required|in:active,inactive',
-        ];
+        'license_number' => [
+            'required',
+            'string',
+            Rule::unique('drivers', 'license_number')
+                ->ignore($this->driver),
+        ],
+
+        'phone_number' => 'required|string|max:20',
+
+        'status' => 'required|in:active,inactive',
+    ];
     }
 }

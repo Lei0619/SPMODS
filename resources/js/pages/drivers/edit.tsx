@@ -7,18 +7,16 @@ import {
     CFormInput,
     CFormSelect,
 } from '@coreui/react';
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 
 type Driver = {
     id: number;
-    name: string;
-    vehicle_type: string;
-    max_capacity: number;
-    device_id: string | null;
-    driver_id: number | null;
-    route_id: number | null;
+    first_name: string;
+    last_name: string;
+    license_number: string;
+    phone_number: string;
     status: string;
 };
 
@@ -28,13 +26,11 @@ type Props = {
 
 export default function EditDriver({ driver }: Props) {
     const [form, setForm] = useState({
-        name: driver.name ?? '',
-        vehicle_type: driver.vehicle_type ?? '',
-        max_capacity: String(driver.max_capacity ?? ''),
-        device_id: driver.device_id ?? '',
-        driver_id: String(driver.driver_id ?? ''),
-        route_id: String(driver.route_id ?? ''),
-        status: driver.status ?? 'available',
+        first_name: driver.first_name ?? '',
+        last_name: driver.last_name ?? '',
+        license_number: driver.license_number ?? '',
+        phone_number: driver.phone_number ?? '',
+        status: driver.status ?? 'active',
     });
 
     const [loading, setLoading] = useState(false);
@@ -63,23 +59,21 @@ export default function EditDriver({ driver }: Props) {
                     Accept: 'application/json',
                 },
                 body: JSON.stringify({
-                    name: form.name,
-                    vehicle_type: form.vehicle_type,
-                    max_capacity: Number(form.max_capacity),
-                    device_id: form.device_id || null,
-                    driver_id: form.driver_id ? Number(form.driver_id) : null,
-                    route_id: form.route_id ? Number(form.route_id) : null,
+                    first_name: form.first_name,
+                    last_name: form.last_name,
+                    license_number: form.license_number,
+                    phone_number: form.phone_number,
                     status: form.status,
                 }),
             });
 
-            const data = await response.json();
+            const data = await response.json().catch(() => null);
 
             if (!response.ok) {
                 console.error(data);
 
                 alert(
-                    data.message ?? 'There was an error updating the driver.',
+                    data?.message ?? 'There was an error updating the driver.',
                 );
 
                 return;
@@ -90,6 +84,7 @@ export default function EditDriver({ driver }: Props) {
             router.visit('/drivers');
         } catch (error) {
             console.error(error);
+
             alert('Could not connect to the API.');
         } finally {
             setLoading(false);
@@ -98,95 +93,78 @@ export default function EditDriver({ driver }: Props) {
 
     return (
         <CCard>
-            <CCardHeader>
+            <CCardHeader className="d-flex justify-content-between align-items-center">
                 <strong>Edit Driver #{driver.id}</strong>
+
+                <Link href="/drivers">
+                    <CButton color="secondary">Back</CButton>
+                </Link>
             </CCardHeader>
 
             <CCardBody>
                 <CForm onSubmit={handleSubmit}>
+                    {/* FIRST NAME */}
                     <div className="mb-3">
                         <CFormInput
-                            label="Name"
-                            name="name"
-                            value={form.name}
+                            label="First Name"
+                            name="first_name"
+                            value={form.first_name}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
-                    <div className="mb-3">
-                        <CFormSelect
-                            label="Vehicle Type"
-                            name="vehicle_type"
-                            value={form.vehicle_type}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">Select vehicle type</option>
-                            <option value="bus">Bus</option>
-                            <option value="van">Van</option>
-                            <option value="jeepney">Jeepney</option>
-                        </CFormSelect>
-                    </div>
-
+                    {/* LAST NAME */}
                     <div className="mb-3">
                         <CFormInput
-                            label="Maximum Capacity"
-                            name="max_capacity"
-                            type="number"
-                            min="1"
-                            value={form.max_capacity}
+                            label="Last Name"
+                            name="last_name"
+                            value={form.last_name}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
+                    {/* LICENSE NUMBER */}
                     <div className="mb-3">
                         <CFormInput
-                            label="Device ID"
-                            name="device_id"
-                            value={form.device_id}
+                            label="License Number"
+                            name="license_number"
+                            type="text"
+                            value={form.license_number}
                             onChange={handleChange}
-                            placeholder="Arduino device ID"
+                            required
                         />
                     </div>
 
+                    {/* PHONE NUMBER */}
                     <div className="mb-3">
                         <CFormInput
-                            label="Driver ID"
-                            name="driver_id"
-                            type="number"
-                            min="1"
-                            value={form.driver_id}
+                            label="Phone Number"
+                            name="phone_number"
+                            type="text"
+                            value={form.phone_number}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
-                    <div className="mb-3">
-                        <CFormInput
-                            label="Route ID"
-                            name="route_id"
-                            type="number"
-                            min="1"
-                            value={form.route_id}
-                            onChange={handleChange}
-                        />
-                    </div>
-
+                    {/* STATUS */}
                     <div className="mb-3">
                         <CFormSelect
                             label="Status"
                             name="status"
                             value={form.status}
                             onChange={handleChange}
+                            required
                         >
-                            <option value="available">Available</option>
-                            <option value="on_trip">On Trip</option>
-                            <option value="maintenance">Maintenance</option>
-                            <option value="offline">Offline</option>
+                            <option value="active">Active</option>
+
+                            <option value="inactive">Inactive</option>
                         </CFormSelect>
                     </div>
 
+                    {/* BUTTONS */}
                     <div className="d-flex gap-2">
                         <CButton
                             type="submit"
@@ -196,14 +174,15 @@ export default function EditDriver({ driver }: Props) {
                             {loading ? 'Updating...' : 'Update Driver'}
                         </CButton>
 
-                        <CButton
-                            type="button"
-                            color="secondary"
-                            disabled={loading}
-                            onClick={() => router.visit('/drivers')}
-                        >
-                            Cancel
-                        </CButton>
+                        <Link href="/drivers">
+                            <CButton
+                                type="button"
+                                color="secondary"
+                                disabled={loading}
+                            >
+                                Cancel
+                            </CButton>
+                        </Link>
                     </div>
                 </CForm>
             </CCardBody>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->integer('license_number')->unique();
+            $table->string('license_number')->unique();
             $table->string('phone_number');
             $table->string('status')->default('active');
             $table->timestamps();
