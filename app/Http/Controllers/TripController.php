@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTripRequest;
+use App\Http\Requests\Trip\StoreTripRequest;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 

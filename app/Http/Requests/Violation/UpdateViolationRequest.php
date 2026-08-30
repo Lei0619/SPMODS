@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Violation;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreViolationRequest extends FormRequest
+class UpdateViolationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,15 @@ class StoreViolationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'driver_id' => ['required', 'exists:drivers,id'],
-            'vehicle_id' => ['required', 'exists:vehicles,id'],
-            'trip_id' => ['required', 'exists:trips,id'],
+            'driver_id' => ['sometimes', 'exists:drivers,id'],
+            'vehicle_id' => ['sometimes', 'exists:vehicles,id'],
+            'trip_id' => ['sometimes', 'exists:trips,id'],
 
-            'allowed_capacity' => ['required', 'integer', 'min:1'],
-            'actual_capacity' => ['required', 'integer', 'min:1'],
+            'allowed_capacity' => ['sometimes', 'integer', 'min:1'],
+            'actual_capacity' => ['sometimes', 'integer', 'min:1'],
 
             'violation_type' => [
-                'required',
+                'sometimes',
                 Rule::in([
                     'overLoad',
                     'sensorFailure',
@@ -40,7 +40,7 @@ class StoreViolationRequest extends FormRequest
                 ]),
             ],
 
-            'violation_time' => ['nullable', 'date'],
+            'violation_time' => ['sometimes', 'date'],
         ];
     }
 }

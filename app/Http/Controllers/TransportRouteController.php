@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTransportRouteRequest;
-use App\Http\Requests\UpdateTransportRouteRequest;
+use App\Http\Requests\TransportRoute\StoreTransportRouteRequest;
+use App\Http\Requests\TransportRoute\UpdateTransportRouteRequest;
 use App\Models\TransportRoute;
 
 class TransportRouteController extends Controller

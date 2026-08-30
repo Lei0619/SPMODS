@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreViolationRequest;
-use App\Http\Requests\UpdateViolationRequest;
+use App\Http\Requests\Violation\StoreViolationRequest;
+use App\Http\Requests\Violation\UpdateViolationRequest;
 use App\Models\Violation;
 
 class ViolationController extends Controller
