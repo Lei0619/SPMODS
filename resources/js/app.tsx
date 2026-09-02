@@ -1,6 +1,6 @@
-import React from 'react';
 import { CButton } from '@coreui/react';
 import { createInertiaApp } from '@inertiajs/react';
+import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
@@ -52,9 +52,7 @@ createInertiaApp({
                 <div style={{ padding: '40px' }}>
                     <h1>SPMods + CoreUI Test</h1>
 
-                    <CButton color="primary">
-                        CoreUI is working 🎉
-                    </CButton>
+                    <CButton color="primary">CoreUI is working 🎉</CButton>
                 </div>
 
                 {/* Inertia application */}
