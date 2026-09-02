@@ -3,7 +3,9 @@ import { dashboard, login } from '@/routes';
 import { register } from '@/routes';
 
 export default function Welcome() {
-    const { auth } = usePage().props;
+    const auth = (usePage().props as { auth?: { user?: unknown } }).auth ?? {
+        user: null,
+    };
 
     return (
         <>

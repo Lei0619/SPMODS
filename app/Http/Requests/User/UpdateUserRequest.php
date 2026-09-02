@@ -35,7 +35,7 @@ class UpdateUserRequest extends FormRequest
 
             'password' => 'nullable|string|min:8|confirmed',
 
-            'role' => 'required|in:admin,operator,inspector',
+            'role' => 'required|in:admin,driver',
         ];
     }
 

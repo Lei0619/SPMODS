@@ -16,7 +16,9 @@ import { UserMenuContent } from '@/components/user-menu-content';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export function NavUser() {
-    const { auth } = usePage().props;
+    const auth = (usePage().props as { auth?: { user?: unknown } }).auth ?? {
+        user: null,
+    };
     const { state } = useSidebar();
     const isMobile = useIsMobile();
 

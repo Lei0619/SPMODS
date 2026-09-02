@@ -37,6 +37,8 @@ class UserController extends Controller
             'role' => $request->input('role'),
         ]);
 
+        $user->assignRole($request->input('role'));
+
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
 

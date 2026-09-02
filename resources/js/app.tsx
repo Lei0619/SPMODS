@@ -1,3 +1,4 @@
+import React from 'react';
 import { CButton } from '@coreui/react';
 import { createInertiaApp } from '@inertiajs/react';
 import { Toaster } from '@/components/ui/sonner';
@@ -12,6 +13,19 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
+
+    resolve: (name) => {
+        const pages = import.meta.glob('./pages/**/*.tsx', {
+            eager: true,
+        }) as Record<
+            string,
+            {
+                default: React.ComponentType;
+            }
+        >;
+
+        return pages[`./pages/${name}.tsx`];
+    },
 
     layout: (name) => {
         switch (true) {
@@ -38,10 +52,12 @@ createInertiaApp({
                 <div style={{ padding: '40px' }}>
                     <h1>SPMods + CoreUI Test</h1>
 
-                    <CButton color="primary">CoreUI is working 🎉</CButton>
+                    <CButton color="primary">
+                        CoreUI is working 🎉
+                    </CButton>
                 </div>
 
-                {/* Your normal Inertia application */}
+                {/* Inertia application */}
                 {app}
 
                 <Toaster />
@@ -54,5 +70,4 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on load...
 initializeTheme();

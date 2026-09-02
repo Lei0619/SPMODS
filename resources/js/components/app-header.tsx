@@ -65,7 +65,9 @@ const activeItemStyles =
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
-    const { auth } = page.props;
+    const auth = (page.props as { auth?: { user?: { name?: string; avatar?: string } | null } }).auth ?? {
+        user: null,
+    };
     const getInitials = useInitials();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
 

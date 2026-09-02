@@ -20,13 +20,26 @@ class ViolationFactory extends Factory
      */
     public function definition(): array
     {
+        $allowedCapacity = fake()->numberBetween(20, 60);
+
+        $violationType = fake()->randomElement([
+            'overLoad',
+            'sensorFailure',
+            'unauthorizedStopping',
+        ]);
         return [
             'driver_id' => Driver::factory(),
             'vehicle_id' => Vehicle::factory(),
             'trip_id' => Trip::factory(),
-            'allowed_capacity' => fake()->numberBetween(20, 60),
-            'actual_capacity' => fake()->numberBetween(1, 80),
-            'violation_type' => fake()->randomElement(['over_capacity', 'no_seatbelt', 'speeding', 'route_violation']),
+
+            'allowed_capacity' => $allowedCapacity,
+
+            'actual_capacity' => $violationType === 'overLoad'
+                ? fake()->numberBetween($allowedCapacity + 1, $allowedCapacity + 20)
+                : fake()->numberBetween(1, 80),
+
+            'violation_type' => $violationType,
+
             'violation_time' => fake()->dateTimeBetween('-1 week', 'now'),
         ];
     }

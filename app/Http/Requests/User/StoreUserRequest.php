@@ -29,7 +29,7 @@ class StoreUserRequest extends FormRequest
 
             'password' => 'required|string|min:8|confirmed',
 
-            'role' => 'required|in:admin,operator,inspector',
+            'role' => 'required|in:admin,driver',
         ];
     }
 
