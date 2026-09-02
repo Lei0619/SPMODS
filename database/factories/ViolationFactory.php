@@ -27,6 +27,7 @@ class ViolationFactory extends Factory
             'sensorFailure',
             'unauthorizedStopping',
         ]);
+
         return [
             'driver_id' => Driver::factory(),
             'vehicle_id' => Vehicle::factory(),

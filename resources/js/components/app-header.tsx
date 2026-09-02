@@ -33,7 +33,7 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
 import { cn, toUrl } from '@/lib/utils';
 import { dashboard } from '@/routes';
-import type { BreadcrumbItem, NavItem } from '@/types';
+import type { BreadcrumbItem, NavItem, User } from '@/types';
 
 type Props = {
     breadcrumbs?: BreadcrumbItem[];
@@ -67,7 +67,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
     const auth = (
         page.props as {
-            auth?: { user?: { name?: string; avatar?: string } | null };
+            auth?: { user?: User | null };
         }
     ).auth ?? {
         user: null,
