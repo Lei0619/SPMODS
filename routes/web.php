@@ -27,11 +27,11 @@ Route::get('/vehicles/create', function () {
 Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
     ->name('vehicles.edit');
 
-Route::get('/drivers', [DriverController::class, 'index'])
+Route::get('/admin/drivers', [DriverController::class, 'index'])
     ->name('drivers.index');
-Route::get('/drivers/create', [DriverController::class, 'create'])
+Route::get('/admin/drivers/create', [DriverController::class, 'create'])
     ->name('drivers.create');
-Route::get('/drivers/{driver}/edit', [DriverController::class, 'edit'])
+Route::get('/admin/drivers/{driver}/edit', [DriverController::class, 'edit'])
     ->name('drivers.edit');
 Route::get('/drivers/{driver}', [DriverController::class, 'show'])
     ->name('drivers.show');

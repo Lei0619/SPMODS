@@ -39,7 +39,7 @@ type Driver = {
     license_number: string;
     phone_number: string;
     status: string;
-    vehicle?: Vehicle;
+    vehicle?: Vehicle | null;
     violations?: Violation[];
 };
 
@@ -59,23 +59,23 @@ export default function DriverIndex({ drivers }: Props) {
                 },
             });
 
-            const data = await response.json();
-
             if (!response.ok) {
+                const data = await response.json().catch(() => null);
+
                 console.error(data);
 
                 alert(
-                    data.message ?? 'There was an error deleting the driver.',
+                    data?.message ?? 'There was an error deleting the driver.',
                 );
 
                 return;
             }
 
-            alert('Driver deleted successfully! 🗑️');
+            alert('Driver deleted successfully!');
 
             setDeleteId(null);
 
-            router.visit('/drivers');
+            router.visit('/admin/drivers');
         } catch (error) {
             console.error(error);
 
@@ -88,144 +88,166 @@ export default function DriverIndex({ drivers }: Props) {
             <CCardHeader className="d-flex justify-content-between align-items-center">
                 <strong>Drivers</strong>
 
-                <Link href="/drivers/create">
+                <Link href="/admin/drivers/create">
                     <CButton color="primary">Add Driver</CButton>
                 </Link>
             </CCardHeader>
 
-            <CCardBody>
-                <CTable hover responsive bordered>
-                    <CTableHead>
-                        <CTableRow>
-                            <CTableHeaderCell>ID</CTableHeaderCell>
+            <CCardBody className="p-0">
+                <div className="table-responsive">
+                    <CTable
+                        hover
+                        bordered
+                        className="mb-0 align-middle"
+                        style={{ minWidth: '1100px' }}
+                    >
+                        <CTableHead>
+                            <CTableRow>
+                                <CTableHeaderCell>ID</CTableHeaderCell>
 
-                            <CTableHeaderCell>Plate Number</CTableHeaderCell>
+                                <CTableHeaderCell>
+                                    Plate Number
+                                </CTableHeaderCell>
 
-                            <CTableHeaderCell>Vehicle Type</CTableHeaderCell>
+                                <CTableHeaderCell>
+                                    Vehicle Type
+                                </CTableHeaderCell>
 
-                            <CTableHeaderCell>Capacity</CTableHeaderCell>
+                                <CTableHeaderCell>Capacity</CTableHeaderCell>
 
-                            <CTableHeaderCell>First Name</CTableHeaderCell>
+                                <CTableHeaderCell>First Name</CTableHeaderCell>
 
-                            <CTableHeaderCell>Last Name</CTableHeaderCell>
+                                <CTableHeaderCell>Last Name</CTableHeaderCell>
 
-                            <CTableHeaderCell>License Number</CTableHeaderCell>
+                                <CTableHeaderCell>
+                                    License Number
+                                </CTableHeaderCell>
 
-                            <CTableHeaderCell>Phone Number</CTableHeaderCell>
+                                <CTableHeaderCell>
+                                    Phone Number
+                                </CTableHeaderCell>
 
-                            <CTableHeaderCell>Status</CTableHeaderCell>
+                                <CTableHeaderCell>Status</CTableHeaderCell>
 
-                            <CTableHeaderCell>Actions</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-
-                    <CTableBody>
-                        {drivers.map((driver) => (
-                            <CTableRow key={driver.id}>
-                                {/* ID */}
-                                <CTableDataCell>{driver.id}</CTableDataCell>
-
-                                {/* PLATE NUMBER */}
-                                <CTableDataCell>
-                                    {driver.vehicle
-                                        ? driver.vehicle.plate_number
-                                        : 'No vehicle'}
-                                </CTableDataCell>
-
-                                {/* VEHICLE TYPE */}
-                                <CTableDataCell>
-                                    {driver.vehicle
-                                        ? driver.vehicle.vehicle_type
-                                        : 'No vehicle'}
-                                </CTableDataCell>
-
-                                {/* CAPACITY */}
-                                <CTableDataCell>
-                                    {driver.vehicle
-                                        ? driver.vehicle.max_capacity
-                                        : 'N/A'}
-                                </CTableDataCell>
-
-                                {/* FIRST NAME, LAST NAME */}
-                                <CTableDataCell>
-                                    <Link href={`/drivers/${driver.id}`}>
-                                        {driver.first_name} {driver.last_name}
-                                    </Link>
-                                </CTableDataCell>
-
-                                {/* LICENSE NUMBER */}
-                                <CTableDataCell>
-                                    {driver.license_number}
-                                </CTableDataCell>
-
-                                {/* PHONE NUMBER */}
-                                <CTableDataCell>
-                                    {driver.phone_number}
-                                </CTableDataCell>
-
-                                {/* STATUS */}
-                                <CTableDataCell>{driver.status}</CTableDataCell>
-
-                                {/* ACTIONS */}
-                                <CTableDataCell>
-                                    <div className="d-flex align-items-center gap-1">
-                                        {/* EDIT */}
-                                        <Link
-                                            href={`/drivers/${driver.id}/edit`}
-                                        >
-                                            <CButton color="warning" size="sm">
-                                                Edit
-                                            </CButton>
-                                        </Link>
-
-                                        {/* DELETE */}
-                                        <CButton
-                                            type="button"
-                                            color="danger"
-                                            size="sm"
-                                            onClick={() =>
-                                                setDeleteId(driver.id)
-                                            }
-                                        >
-                                            Delete
-                                        </CButton>
-
-                                        {/* DELETE CONFIRMATION */}
-                                        {deleteId === driver.id && (
-                                            <>
-                                                <span className="ms-2">
-                                                    Are you sure?
-                                                </span>
-
-                                                <CButton
-                                                    type="button"
-                                                    color="danger"
-                                                    size="sm"
-                                                    onClick={() =>
-                                                        handleDelete(driver.id)
-                                                    }
-                                                >
-                                                    Yes
-                                                </CButton>
-
-                                                <CButton
-                                                    type="button"
-                                                    color="secondary"
-                                                    size="sm"
-                                                    onClick={() =>
-                                                        setDeleteId(null)
-                                                    }
-                                                >
-                                                    No
-                                                </CButton>
-                                            </>
-                                        )}
-                                    </div>
-                                </CTableDataCell>
+                                <CTableHeaderCell>Actions</CTableHeaderCell>
                             </CTableRow>
-                        ))}
-                    </CTableBody>
-                </CTable>
+                        </CTableHead>
+
+                        <CTableBody>
+                            {drivers.map((driver) => (
+                                <CTableRow key={driver.id}>
+                                    {/* ID */}
+                                    <CTableDataCell>{driver.id}</CTableDataCell>
+
+                                    {/* Plate Number */}
+                                    <CTableDataCell>
+                                        {driver.vehicle?.plate_number ??
+                                            'No vehicle'}
+                                    </CTableDataCell>
+
+                                    {/* Vehicle Type */}
+                                    <CTableDataCell>
+                                        {driver.vehicle?.vehicle_type ??
+                                            'No vehicle'}
+                                    </CTableDataCell>
+
+                                    {/* Capacity */}
+                                    <CTableDataCell>
+                                        {driver.vehicle?.max_capacity ?? 'N/A'}
+                                    </CTableDataCell>
+
+                                    {/* First Name */}
+                                    <CTableDataCell>
+                                        <Link href={`/drivers/${driver.id}`}>
+                                            {driver.first_name}
+                                        </Link>
+                                    </CTableDataCell>
+
+                                    {/* Last Name */}
+                                    <CTableDataCell>
+                                        <Link href={`/drivers/${driver.id}`}>
+                                            {driver.last_name}
+                                        </Link>
+                                    </CTableDataCell>
+
+                                    {/* License Number */}
+                                    <CTableDataCell>
+                                        {driver.license_number}
+                                    </CTableDataCell>
+
+                                    {/* Phone Number */}
+                                    <CTableDataCell>
+                                        {driver.phone_number}
+                                    </CTableDataCell>
+
+                                    {/* Status */}
+                                    <CTableDataCell>
+                                        {driver.status}
+                                    </CTableDataCell>
+
+                                    {/* Actions */}
+                                    <CTableDataCell>
+                                        <div className="d-flex align-items-center gap-1">
+                                            <Link
+                                                href={`/admin/drivers/${driver.id}/edit`}
+                                            >
+                                                <CButton
+                                                    color="warning"
+                                                    size="sm"
+                                                >
+                                                    Edit
+                                                </CButton>
+                                            </Link>
+
+                                            <CButton
+                                                type="button"
+                                                color="danger"
+                                                size="sm"
+                                                onClick={() =>
+                                                    setDeleteId(driver.id)
+                                                }
+                                            >
+                                                Delete
+                                            </CButton>
+
+                                            {deleteId === driver.id && (
+                                                <>
+                                                    <span className="ms-2">
+                                                        Are you sure?
+                                                    </span>
+
+                                                    <CButton
+                                                        type="button"
+                                                        color="danger"
+                                                        size="sm"
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                driver.id,
+                                                            )
+                                                        }
+                                                    >
+                                                        Yes
+                                                    </CButton>
+
+                                                    <CButton
+                                                        type="button"
+                                                        color="secondary"
+                                                        size="sm"
+                                                        onClick={() =>
+                                                            setDeleteId(null)
+                                                        }
+                                                    >
+                                                        No
+                                                    </CButton>
+                                                </>
+                                            )}
+                                        </div>
+                                    </CTableDataCell>
+                                </CTableRow>
+                            ))}
+                        </CTableBody>
+                    </CTable>
+                </div>
             </CCardBody>
         </CCard>
     );

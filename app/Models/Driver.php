@@ -24,13 +24,7 @@ class Driver extends Model
     /** @return HasOne<Vehicle, $this> */
     public function vehicle(): HasOne
     {
-        return $this->hasOne(Vehicle::class);
-    }
-
-    /** @return HasMany<Vehicle, $this> */
-    public function vehicles(): HasMany
-    {
-        return $this->hasMany(Vehicle::class);
+        return $this->hasOne(Vehicle::class, 'driver_id', 'id');
     }
 
     /** @return HasMany<Violation, $this> */

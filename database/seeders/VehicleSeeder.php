@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Driver;
 use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,10 @@ class VehicleSeeder extends Seeder
      */
     public function run(): void
     {
-        Vehicle::factory()->count(10)->create();
+        Driver::query()->each(function (Driver $driver): void {
+            Vehicle::factory()->create([
+                'driver_id' => $driver->id,
+            ]);
+        });
     }
 }

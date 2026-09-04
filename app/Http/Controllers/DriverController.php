@@ -16,6 +16,7 @@ class DriverController extends Controller
     {
         return Inertia::render('admin/drivers/index', [
             'drivers' => Driver::query()
+                ->with('vehicle')
                 ->withCount('violations')
                 ->get(),
         ]);
