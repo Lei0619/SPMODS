@@ -69,9 +69,9 @@ export default function DriverShow({ driver }: Props) {
                 return;
             }
 
-            alert('Driver deleted successfully! 🗑️');
+            alert('Driver deleted successfully!');
 
-            router.visit('/drivers');
+            router.visit('/admin/drivers');
         } catch (error) {
             console.error(error);
 
@@ -89,11 +89,11 @@ export default function DriverShow({ driver }: Props) {
                 </strong>
 
                 <div className="d-flex gap-2">
-                    <Link href="/drivers">
+                    <Link href="/admin/dashboard">
                         <CButton color="secondary">Back</CButton>
                     </Link>
 
-                    <Link href={`/drivers/${driver.id}/edit`}>
+                    <Link href={`/admin/drivers/${driver.id}/edit`}>
                         <CButton color="warning">Edit</CButton>
                     </Link>
 
