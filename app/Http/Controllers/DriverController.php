@@ -14,11 +14,10 @@ class DriverController extends Controller
      */
     public function index(): mixed
     {
-        return Inertia::render('drivers/index', [
-            'drivers' => Driver::with([
-                'vehicle',
-                'violations',
-            ])->get(),
+        return Inertia::render('admin/drivers/index', [
+            'drivers' => Driver::query()
+                ->withCount('violations')
+                ->get(),
         ]);
     }
 
@@ -27,7 +26,7 @@ class DriverController extends Controller
      */
     public function create(): mixed
     {
-        return Inertia::render('drivers/create');
+        return Inertia::render('admin/drivers/create');
     }
 
     /**
@@ -50,7 +49,7 @@ class DriverController extends Controller
             'violations',
         ]);
 
-        return Inertia::render('drivers/show', [
+        return Inertia::render('admin/drivers/show', [
             'driver' => $driver,
         ]);
     }
@@ -65,7 +64,7 @@ class DriverController extends Controller
             'violations',
         ]);
 
-        return Inertia::render('drivers/edit', [
+        return Inertia::render('admin/drivers/edit', [
             'driver' => $driver,
         ]);
     }

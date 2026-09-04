@@ -24,7 +24,7 @@ createInertiaApp({
             }
         >;
 
-        return pages[`./pages/${name}.tsx`];
+        return pages[`./pages/${name}.tsx`]?.default;
     },
 
     layout: (name) => {

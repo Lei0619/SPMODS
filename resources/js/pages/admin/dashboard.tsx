@@ -1,27 +1,28 @@
-import { CCard, CCardBody, CCardHeader } from '@coreui/react';
+type Dashboard = {
+    total_vehicles: number;
+    total_drivers: number;
+    total_trips: number;
+    total_violations: number;
+    recent_notifications: {
+        id: number;
+        message: string;
+        created_at: string;
+    }[];
+};
 
-<CCard>
-    <CCard>
-        <CCardHeader>Total Drivers</CCardHeader>
+type Props = {
+    dashboard: Dashboard;
+};
 
-        <CCardBody>
-            <h2>12</h2>
-        </CCardBody>
-    </CCard>
+export default function Dashboard({ dashboard }: Props) {
+    return (
+        <div className="container">
+            <h1>Admin Dashboard</h1>
 
-    <CCard>
-        <CCardHeader>Total Vehicles</CCardHeader>
-
-        <CCardBody>
-            <h2>8</h2>
-        </CCardBody>
-    </CCard>
-
-    <CCard>
-        <CCardHeader>Total Violations</CCardHeader>
-
-        <CCardBody>
-            <h2>3</h2>
-        </CCardBody>
-    </CCard>
-</CCard>;
+            <p>Total Vehicles: {dashboard.total_vehicles}</p>
+            <p>Total Drivers: {dashboard.total_drivers}</p>
+            <p>Total Trips: {dashboard.total_trips}</p>
+            <p>Total Violations: {dashboard.total_violations}</p>
+        </div>
+    );
+}
