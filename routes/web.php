@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DriverDashboardController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +18,11 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
+});
+
+Route::middleware(['auth', 'role:driver'])->group(function () {
+    Route::get('/driver/dashboard', [DriverDashboardController::class, 'index'])
+        ->name('driver.dashboard');
 });
 
 Route::get('/vehicles', [VehicleController::class, 'index'])
