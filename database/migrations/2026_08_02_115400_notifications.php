@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('driver_id')->constrained()->cascadeOnDelete();
             $table->foreignId('trip_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('violation_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('message');
             $table->enum('type', [
