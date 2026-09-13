@@ -1,4 +1,3 @@
-import { CButton } from '@coreui/react';
 import { createInertiaApp } from '@inertiajs/react';
 import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
@@ -48,13 +47,6 @@ createInertiaApp({
     withApp(app) {
         return (
             <TooltipProvider delayDuration={0}>
-                {/* CoreUI Test */}
-                <div style={{ padding: '40px' }}>
-                    <h1>SPMods + CoreUI Test</h1>
-
-                    <CButton color="primary">CoreUI is working 🎉</CButton>
-                </div>
-
                 {/* Inertia application */}
                 {app}
 
