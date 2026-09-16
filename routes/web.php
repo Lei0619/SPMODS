@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
         return redirect()->route('driver.dashboard');
     }
 
-    abort(403, 'Unauthorized Account');
+    return Inertia::render('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
