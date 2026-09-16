@@ -32,6 +32,12 @@ const collectTsxEntries = (dir: string): string[] => {
 const pageEntries = collectTsxEntries('resources/js/pages');
 
 export default defineConfig({
+    server: {
+        host: true,
+        hmr: {
+            host: 'localhost',
+        },
+    },
     plugins: [
         laravel({
             input: [
