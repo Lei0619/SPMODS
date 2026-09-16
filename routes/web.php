@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DriverDashboardController;
 use App\Http\Controllers\VehicleController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,7 +14,19 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('dashboard');
+    $user = Auth::user();
+
+    abort_unless($user instanceof User, 403);
+
+    /** @var User $user */
+    if ($user->hasRole('admin')) {
+        return redirect()->route('admin.dashboard');
+    }
+    if ($user->hasRole('driver')) {
+        return redirect()->route('driver.dashboard');
+    }
+
+    abort(403, 'Unauthorized Account');
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
