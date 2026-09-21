@@ -13,6 +13,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::get('/gform', function () {
+    return Inertia::render('gform');
+})->name('gform');
+
 Route::get('/dashboard', function () {
     $user = Auth::user();
 
