@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 
 const GOOGLE_FORM_URL =
-    'https://docs.google.com/forms/d/e/1FAIpQLScVwCmG9PwYmrX7q5zxWXbZp3_WR6k834gNSFKvJ6wa4EewPQ/viewform?usp=header';
+    'https://docs.google.com/forms/d/e/1FAIpQLScVwCmG9PwYmrX7q5zxWXbZp3_WR6k834gNSFKvJ6wa4EewPQ/viewform?embedded=true';
 
 export default function GForm() {
     return (
