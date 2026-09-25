@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDriverAppRequest;
+use App\Http\Requests\UpdateDriverAppRequest;
 use App\Models\DriverApp;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class DriverAppController extends Controller
@@ -68,10 +68,10 @@ class DriverAppController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): mixed
+    public function update(UpdateDriverAppRequest $request, string $id): mixed
     {
         $driverApp = DriverApp::findOrFail($id);
-        $driverApp->update($request->all());
+        $driverApp->update($request->validated());
 
         return response()->json($driverApp);
     }

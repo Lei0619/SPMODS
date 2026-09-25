@@ -23,7 +23,11 @@ class StoreDriverAppRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20|unique:driver_apps,phone_number',
+            'license_number' => 'required|string|max:255|unique:driver_apps,license_number',
+            'license_type' => 'required|string|max:255',
+            'license_expiry_date' => 'required|date',
         ];
     }
 }
