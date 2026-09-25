@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverAppController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DriverDashboardController;
 use App\Http\Controllers\VehicleController;
@@ -12,6 +13,23 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
+
+Route::prefix('driver-app')->group(function () {
+    Route::get('/', [DriverAppController::class, 'index'])
+        ->name('driver-app.index');
+    Route::get('/create', [DriverAppController::class, 'create'])
+        ->name('driver-app.create');
+    Route::post('/', [DriverAppController::class, 'store'])
+        ->name('driver-app.store');
+    Route::get('/{id}', [DriverAppController::class, 'show'])
+        ->name('driver-app.show');
+    Route::get('/{id}/edit', [DriverAppController::class, 'edit'])
+        ->name('driver-app.edit');
+    Route::put('/{id}', [DriverAppController::class, 'update'])
+        ->name('driver-app.update');
+    Route::delete('/{id}', [DriverAppController::class, 'destroy'])
+        ->name('driver-app.destroy');
+});
 
 Route::get('/gform', function () {
     return Inertia::render('gform');
