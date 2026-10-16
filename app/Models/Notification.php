@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Notification extends Model
 {
+    protected $table = 'notifications_notification';
+
     protected $fillable = [
-        'vehicle_id',
         'driver_id',
-        'trip_id',
         'violation_id',
         'title',
         'message',
@@ -22,22 +22,10 @@ class Notification extends Model
         'is_read' => 'boolean',
     ];
 
-    /** @return BelongsTo<Vehicle, $this> */
-    public function vehicle(): BelongsTo
-    {
-        return $this->belongsTo(Vehicle::class);
-    }
-
     /** @return BelongsTo<Driver, $this> */
     public function driver(): BelongsTo
     {
         return $this->belongsTo(Driver::class);
-    }
-
-    /** @return BelongsTo<Trip, $this> */
-    public function trip(): BelongsTo
-    {
-        return $this->belongsTo(Trip::class);
     }
 
     /** @return BelongsTo<Violation, $this> */
@@ -50,5 +38,11 @@ class Notification extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /** @return BelongsTo<DriverApp, $this> */
+    public function driverApps()
+    {
+        return $this->hasMany(DriverApp::class);
     }
 }

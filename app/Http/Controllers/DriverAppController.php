@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DriverApplicationSubmitted;
 use App\Http\Requests\StoreDriverAppRequest;
 use App\Http\Requests\UpdateDriverAppRequest;
 use App\Models\DriverApp;
@@ -43,6 +44,8 @@ class DriverAppController extends Controller
             'license_type' => $validateData['license_type'],
             'license_expiry_date' => $validateData['license_expiry_date'],
         ]);
+
+        DriverApplicationSubmitted::dispatch($driverApp);
 
         return response()->json($driverApp, 201);
     }
