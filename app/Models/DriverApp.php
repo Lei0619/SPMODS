@@ -29,10 +29,4 @@ class DriverApp extends Model
     {
         return $this->belongsTo(TransportRoute::class, 'transport_route_id');
     }
-
-    /** @return hasMany<Notification, $this> */
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
 }
