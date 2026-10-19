@@ -15,11 +15,9 @@ class DriverAppController extends Controller
      */
     public function index(): mixed
     {
-        $driverApp = DriverApp::with('transport_routes')->get();
+        $driverApp = DriverApp::all();
 
-        return Inertia::render('DriverApp/Index', [
-            'driverApps' => $driverApp,
-        ]);
+        return response()->json($driverApp);
     }
 
     /**
@@ -35,16 +33,17 @@ class DriverAppController extends Controller
      */
     public function store(StoreDriverAppRequest $request): mixed
     {
-        $validateData = $request->validated();
+        $validatedData = $request->validated();
 
         $driverApp = DriverApp::create([
-            'full_name' => $validateData['full_name'],
-            'phone_number' => $validateData['phone_number'],
-            'license_number' => $validateData['license_number'],
-            'license_type' => $validateData['license_type'],
-            'license_expiry_date' => $validateData['license_expiry_date'],
+            'full_name' => $validatedData['full_name'],
+            'phone_number' => $validatedData['phone_number'],
+            'license_number' => $validatedData['license_number'],
+            'license_type' => $validatedData['license_type'],
+            'license_expiry_date' => $validatedData['license_expiry_date'],
         ]);
 
+        $driverApp = DriverApp::findOrFail($driverApp->id);
         DriverApplicationSubmitted::dispatch($driverApp);
 
         return response()->json($driverApp, 201);
@@ -55,7 +54,7 @@ class DriverAppController extends Controller
      */
     public function show(string $id): mixed
     {
-        return response()->json(DriverApp::findOrFail($id)->load('transport_routes'));
+        return response()->json(DriverApp::findOrFail($id));
     }
 
     /**
