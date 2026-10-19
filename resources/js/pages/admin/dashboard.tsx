@@ -29,7 +29,7 @@ type Props = {
 export default function Dashboard({ dashboard }: Props) {
     return (
         <div className="container-fluid">
-            <h1 className="mb-4">Admin Dashboard</h1>
+            <h1 className="mb-4">Admin Dashboard - update</h1>
 
             {/* Statistics */}
             <CRow className="mb-4">
@@ -89,29 +89,6 @@ export default function Dashboard({ dashboard }: Props) {
                     <Link href="/admin/drivers">
                         <CButton color="primary">View All Drivers</CButton>
                     </Link>
-                </CCardBody>
-            </CCard>
-
-            {/* Recent Notifications */}
-            <CCard>
-                <CCardHeader>
-                    <strong>Recent Notifications</strong>
-                </CCardHeader>
-
-                <CCardBody>
-                    {dashboard.recent_notifications.length > 0 ? (
-                        <ul className="mb-0">
-                            {dashboard.recent_notifications.map(
-                                (notification) => (
-                                    <li key={notification.id}>
-                                        {notification.message}
-                                    </li>
-                                ),
-                            )}
-                        </ul>
-                    ) : (
-                        <p className="mb-0">No recent notifications.</p>
-                    )}
                 </CCardBody>
             </CCard>
         </div>

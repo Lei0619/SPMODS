@@ -1,6 +1,10 @@
 import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
 import type { BreadcrumbItem } from '@/types';
 
+const AppLayoutTemplateWithChildren = AppLayoutTemplate as React.ComponentType<
+    React.PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>
+>;
+
 export default function AppLayout({
     breadcrumbs = [],
     children,
@@ -9,8 +13,8 @@ export default function AppLayout({
     children: React.ReactNode;
 }) {
     return (
-        <AppLayoutTemplate breadcrumbs={breadcrumbs}>
+        <AppLayoutTemplateWithChildren breadcrumbs={breadcrumbs}>
             {children}
-        </AppLayoutTemplate>
+        </AppLayoutTemplateWithChildren>
     );
 }

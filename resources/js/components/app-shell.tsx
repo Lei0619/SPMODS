@@ -13,7 +13,11 @@ export function AppShell({ children, variant = 'sidebar' }: Props) {
 
     if (variant === 'header') {
         return (
-            <div className="flex min-h-screen w-full flex-col">{children}</div>
+            <SidebarProvider defaultOpen={isOpen}>
+                <div className="flex min-h-screen w-full flex-col">
+                    {children}
+                </div>
+            </SidebarProvider>
         );
     }
 
