@@ -25,14 +25,14 @@ class StoreDriverAppRequest extends FormRequest
     {
         $driverApp = $this->route('driver_app');
 
-            return [
-                'full_name' => 'required|string|max:255',
-                'phone_number' => ['required', 'string', 'max:20',
+        return [
+            'full_name' => 'required|string|max:255',
+            'phone_number' => ['required', 'string', 'max:20',
                 Rule::unique('driver_apps', 'phone_number')->ignore($driverApp)],
-                'license_number' => ['required', 'string', 'max:255',
+            'license_number' => ['required', 'string', 'max:255',
                 Rule::unique('driver_apps', 'license_number')->ignore($driverApp)],
-                'license_type' => 'required|string|max:255',
-                'license_expiry_date' => 'required|date',
-            ];
+            'license_type' => 'required|string|max:255',
+            'license_expiry_date' => 'required|date',
+        ];
     }
 }

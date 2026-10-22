@@ -14,10 +14,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-    //Exnhancement: Create a middleware to not expose the Admin CRUD routes while using dedicated, authenticated API endpoints for the Admin CRUD operations.
-    //This will prevent unauthorized access to the Admin CRUD routes and ensure that only authenticated users can access them.
+// Exnhancement: Create a middleware to not expose the Admin CRUD routes while using dedicated, authenticated API endpoints for the Admin CRUD operations.
+// This will prevent unauthorized access to the Admin CRUD routes and ensure that only authenticated users can access them.
 
-    //driver-app for admin access
+// driver-app for admin access
 Route::middleware(['auth', 'role:admin'])
     ->prefix('driver-app')
     ->group(function () {
@@ -35,15 +35,15 @@ Route::middleware(['auth', 'role:admin'])
             ->name('driver-app.update');
         Route::delete('/{id}', [DriverAppController::class, 'destroy'])
             ->name('driver-app.destroy');
-});
+    });
 
-    //admin dashboard routes
+// admin dashboard routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
 });
 
-    //admin's vehicle routes
+// admin's vehicle routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/vehicles', [VehicleController::class, 'index'])
         ->name('vehicles.index');
@@ -51,10 +51,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return Inertia::render('Vehicles/Create');
     })->name('vehicles.create');
     Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
-    ->name('vehicles.edit');
+        ->name('vehicles.edit');
 });
 
-    //driver routes
+// driver routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/drivers', [DriverController::class, 'index'])
         ->name('drivers.index');
@@ -63,14 +63,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/drivers/{driver}/edit', [DriverController::class, 'edit'])
         ->name('drivers.edit');
     Route::get('/drivers/{driver}', [DriverController::class, 'show'])
-    ->name('drivers.show');
+        ->name('drivers.show');
 });
 
 Route::get('/gform', function () {
     return Inertia::render('gform');
 })->name('gform');
 
-    //admin and driver dashboard routes and authentication
+// admin and driver dashboard routes and authentication
 Route::get('/dashboard', function () {
     $user = Auth::user();
 
@@ -87,7 +87,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-    //driver dashboard routes
+// driver dashboard routes
 Route::middleware(['auth', 'role:driver'])->group(function () {
     Route::get('/driver/dashboard', [DriverDashboardController::class, 'index'])
         ->name('driver.dashboard');
