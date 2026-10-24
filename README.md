@@ -88,53 +88,9 @@ SPMods is intended as a learning and prototyping project demonstrating the integ
 
 ---
 
-## System Architecture
-
-```mermaid
-flowchart TD
-    A[Administrator / Operator / Inspector]
-    B[React + CoreUI Frontend]
-    C[Laravel Backend]
-    D[MySQL Database]
-    E[Arduino Uno R3]
-    F[IR Sensors]
-    G[LCD + LEDs + Buzzer]
-
-    A --> B
-    B --> C
-    C --> D
-    F --> E
-    E --> G
-    E -. Future API integration .-> C
-```
-
 The web application manages transport records and backend operations. The Arduino prototype handles sensor-based passenger counting and local alerts.
 
 **Note:** Direct Arduino-to-Laravel communication is a planned integration unless explicitly implemented and verified in the current version.
-
----
-
-## Hardware Components
-
-| Component | Function |
-|---|---|
-| Arduino Uno R3 | Processes sensor inputs |
-| 2 IR Sensors | Detect passenger entry and exit |
-| 16×2 LCD with I2C | Displays passenger count |
-| LEDs | Indicate capacity status |
-| Buzzer | Provides an audible alert |
-| Breadboard and Jumper Wires | Prototype circuit connections |
-| Power Supply | Supplies power to the circuit |
-
-### Hardware Logic
-
-1. An IR sensor detects a passenger entering or exiting.
-2. The Arduino updates the passenger count.
-3. The current count is compared with the configured capacity.
-4. The LCD displays the updated count.
-5. LEDs and the buzzer provide alerts when the capacity threshold is reached or exceeded.
-
-Sensor placement, simultaneous detections, and counting accuracy must be tested on the physical prototype.
 
 ---
 
