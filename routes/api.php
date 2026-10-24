@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DriverController;
+use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PassengerLogController;
 use App\Http\Controllers\TransportRouteController;
