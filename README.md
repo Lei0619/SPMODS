@@ -83,10 +83,6 @@ SPMods is intended as a learning and prototyping project demonstrating the integ
 | MySQL | Relational database |
 | Laravel Sanctum | API authentication |
 | Spatie Laravel Permission | Roles and permissions |
-| Arduino Uno R3 | Hardware controller |
-| IR Sensors | Passenger entry and exit detection |
-| LCD 16×2 I2C | Passenger-count display |
-| LEDs and Buzzer | Capacity alerts |
 | Docker Compose | Local development environment |
 | Pest / PHPStan / Laravel Pint | Testing, static analysis, and code formatting |
 
