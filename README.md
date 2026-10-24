@@ -16,8 +16,6 @@ SPMods is a web-based passenger monitoring and overloading detection system desi
 - [Objectives](#objectives)
 - [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
-- [System Architecture](#system-architecture)
-- [Hardware Components](#hardware-components)
 - [Database Overview](#database-overview)
 - [API Endpoints](#api-endpoints)
 - [Installation](#installation)
