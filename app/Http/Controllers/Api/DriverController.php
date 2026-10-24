@@ -13,7 +13,7 @@ class DriverController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $drivers = Driver::query()
             ->with('vehicle')
