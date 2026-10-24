@@ -11,7 +11,11 @@ use App\Http\Controllers\ViolationController;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('users', UserController::class);
-Route::apiResource('drivers', DriverController::class);
+
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::apiResource('drivers', DriverController::class);
+});
+
 Route::apiResource('vehicles', VehicleController::class);
 Route::apiResource('transport-routes', TransportRouteController::class);
 Route::apiResource('trips', TripController::class);
