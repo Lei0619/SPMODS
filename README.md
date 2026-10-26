@@ -1,4 +1,3 @@
-
 # SPMods
 ### Smart Passenger Counter & Load Balancer
 
@@ -24,6 +23,7 @@ SPMods is a web-based passenger monitoring and overloading detection system desi
 - [Security](#security)
 - [Future Improvements](#future-improvements)
 - [Disclaimer](#disclaimer)
+- [Credits & Acknowledgments](#credits--acknowledgments)
 
 ---
 
@@ -88,7 +88,7 @@ SPMods is intended as a learning and prototyping project demonstrating the integ
 
 The web application manages transport records and backend operations. The Arduino prototype handles sensor-based passenger counting and local alerts.
 
-**Note:** Direct Arduino-to-Laravel communication is a planned integration unless explicitly implemented and verified in the current version.
+> **Note:** Direct Arduino-to-Laravel communication is a planned integration unless explicitly implemented and verified in the current version.
 
 ---
 
@@ -269,6 +269,7 @@ The workflow covers:
 - **Laravel Pint:** Code formatting.
 - **Postman / cURL:** API testing.
 - **QA Workbook:** Test plans, scenarios, cases, execution logs, defect records, and traceability.
+- **Jira (optional):** Track defects, development tasks, priorities, and retesting workflow.
 
 ### Example Commands
 
@@ -348,5 +349,14 @@ Its records and alerts should not be treated as official enforcement decisions w
 **Status:** In Development
 
 SPMods is being developed as a practical learning project combining backend development, frontend integration, hardware prototyping, database design, API security, and quality assurance.
+
+---
+
+## Credits & Acknowledgments
+
+**Lei Ann Judea C. Dico**  
+*Project Creator & Developer*
+
+SPMods is an independently developed project focused on passenger occupancy monitoring, overloading detection, backend development, hardware prototyping, and software quality assurance.
 
 **Safer Rides. Fairer Loads. Smarter Transport.**
