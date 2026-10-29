@@ -13,6 +13,8 @@ class ViolationController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return Violation::with([
             'driver',
             'vehicle',
@@ -33,6 +35,8 @@ class ViolationController extends Controller
      */
     public function store(StoreViolationRequest $request): mixed
     {
+        $this->requireAdmin();
+
         $violation = Violation::create($request->validated());
 
         return response()->json(['message' => 'Violation created successfully', 'violation' => $violation], 201);
@@ -43,6 +47,8 @@ class ViolationController extends Controller
      */
     public function show(Violation $violation): mixed
     {
+        $this->requireAdmin();
+
         return response()->json($violation);
     }
 
@@ -59,6 +65,8 @@ class ViolationController extends Controller
      */
     public function update(UpdateViolationRequest $request, Violation $violation): mixed
     {
+        $this->requireAdmin();
+
         $violation->update($request->validated());
 
         return response()->json(['message' => 'Violation updated successfully', 'violation' => $violation]);
@@ -69,6 +77,8 @@ class ViolationController extends Controller
      */
     public function destroy(Violation $violation): mixed
     {
+        $this->requireAdmin();
+
         $violation->delete();
 
         return response()->json(['message' => 'Violation deleted successfully']);

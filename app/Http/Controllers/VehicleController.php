@@ -14,6 +14,8 @@ class VehicleController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return Inertia::render('vehicles/index', [
             'vehicles' => Vehicle::with([
                 'driver',
@@ -23,18 +25,12 @@ class VehicleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): void
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreVehicleRequest $request): mixed
     {
+        $this->requireAdmin();
+
         $vehicle = Vehicle::create($request->validated());
 
         return response()->json(['message' => 'Vehicle created successfully', 'vehicle' => $vehicle], 201);
@@ -45,6 +41,8 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle): mixed
     {
+        $this->requireAdmin();
+
         $vehicle->load([
             'driver',
             'transportRoute',
@@ -60,6 +58,8 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle): mixed
     {
+        $this->requireAdmin();
+
         $vehicle->load([
             'driver',
             'transportRoute',
@@ -75,6 +75,8 @@ class VehicleController extends Controller
      */
     public function update(UpdateVehicleRequest $request, Vehicle $vehicle): mixed
     {
+        $this->requireAdmin();
+
         $vehicle->update($request->validated());
 
         return response()->json(['message' => 'Vehicle updated successfully', 'vehicle' => $vehicle]);
@@ -85,6 +87,8 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle): mixed
     {
+        $this->requireAdmin();
+
         $vehicle->delete();
 
         return response()->json(['message' => 'Vehicle deleted successfully']);

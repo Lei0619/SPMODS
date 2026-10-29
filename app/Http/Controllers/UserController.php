@@ -14,6 +14,8 @@ class UserController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return User::all();
     }
 
@@ -30,14 +32,15 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): mixed
     {
+        $this->requireAdmin();
+
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
-            'role' => $request->input('role'),
         ]);
 
-        $user->assignRole($request->input('role'));
+        $user->syncRoles(['driver']);
 
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
@@ -47,6 +50,8 @@ class UserController extends Controller
      */
     public function show(User $user): mixed
     {
+        $this->requireAdmin();
+
         return response()->json($user);
     }
 
@@ -63,6 +68,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): mixed
     {
+        $this->requireAdmin();
+
         $data = $request->validated();
 
         if ($request->filled('password')) {
@@ -84,6 +91,8 @@ class UserController extends Controller
      */
     public function destroy(User $user): mixed
     {
+        $this->requireAdmin();
+
         $user->delete();
 
         return response()->json(['message' => 'User deleted successfully']);

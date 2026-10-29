@@ -122,9 +122,6 @@ export default function EditVehicle({ vehicle }: Props) {
                             onChange={handleChange}
                             required
                         >
-                            <option value="">Select vehicle type</option>
-                            <option value="bus">Bus</option>
-                            <option value="van">Van</option>
                             <option value="jeepney">Jeepney</option>
                         </CFormSelect>
                     </div>

@@ -13,6 +13,8 @@ class TransportRouteController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return TransportRoute::with('vehicles')->get();
     }
 
@@ -29,6 +31,8 @@ class TransportRouteController extends Controller
      */
     public function store(StoreTransportRouteRequest $request): mixed
     {
+        $this->requireAdmin();
+
         $validateData = $request->validated();
 
         TransportRoute::create($validateData);
@@ -41,6 +45,8 @@ class TransportRouteController extends Controller
      */
     public function show(TransportRoute $transportRoute): mixed
     {
+        $this->requireAdmin();
+
         return response()->json($transportRoute);
     }
 
@@ -57,6 +63,8 @@ class TransportRouteController extends Controller
      */
     public function update(UpdateTransportRouteRequest $request, TransportRoute $transportRoute): mixed
     {
+        $this->requireAdmin();
+
         $transportRoute->update($request->validated());
 
         return response()->json(['message' => 'Transport route updated successfully', 'transportRoute' => $transportRoute]);
@@ -67,6 +75,8 @@ class TransportRouteController extends Controller
      */
     public function destroy(TransportRoute $transportRoute): mixed
     {
+        $this->requireAdmin();
+
         $transportRoute->delete();
 
         return response()->json(['message' => 'Transport route deleted successfully']);

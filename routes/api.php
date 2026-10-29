@@ -10,15 +10,16 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ViolationController;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('users', UserController::class);
-
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('users', UserController::class);
     Route::apiResource('drivers', DriverController::class);
+    Route::apiResource('vehicles', VehicleController::class);
+    Route::apiResource('transport-routes', TransportRouteController::class)
+        ->except(['destroy']);
+    Route::apiResource('trips', TripController::class)
+        ->except(['update', 'destroy']);
+    Route::apiResource('violations', ViolationController::class);
+    Route::apiResource('notifications', NotificationController::class)
+        ->only(['index', 'show']);
+    Route::apiResource('passenger-logs', PassengerLogController::class);
 });
-
-Route::apiResource('vehicles', VehicleController::class);
-Route::apiResource('transport-routes', TransportRouteController::class);
-Route::apiResource('trips', TripController::class);
-Route::apiResource('violations', ViolationController::class);
-Route::apiResource('notifications', NotificationController::class);
-Route::apiResource('passenger-logs', PassengerLogController::class);

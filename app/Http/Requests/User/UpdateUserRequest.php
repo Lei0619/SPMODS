@@ -13,7 +13,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->hasRole('admin') ?? false;
     }
 
     /**
@@ -25,17 +25,14 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-
             'email' => [
                 'required',
                 'email',
                 'max:255',
                 Rule::unique('users', 'email')->ignore($this->user),
             ],
-
             'password' => 'nullable|string|min:8|confirmed',
-
-            'role' => 'required|in:admin,driver',
+            'role' => ['prohibited'],
         ];
     }
 
@@ -46,16 +43,12 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name.required' => 'Name is required.',
-
             'email.required' => 'Email is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email is already registered.',
-
             'password.min' => 'Password must be at least 8 characters.',
             'password.confirmed' => 'Password confirmation does not match.',
-
-            'role.required' => 'Please select a role.',
-            'role.in' => 'Invalid role selected.',
+            'role.prohibited' => 'Role assignment is not allowed through this endpoint.',
         ];
     }
 }

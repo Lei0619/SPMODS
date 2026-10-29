@@ -12,7 +12,9 @@ class UpdateDriverRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user();
+
+        return ($user?->hasRole('admin') ?? false) || ($user?->hasRole('driver') ?? false);
     }
 
     /**

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreNotificationRequest;
 use App\Models\Notification;
-use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -13,6 +11,8 @@ class NotificationController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return Notification::with([
             'vehicle',
             'driver',
@@ -22,31 +22,12 @@ class NotificationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): void
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreNotificationRequest $request): mixed
-    {
-        $notification = Notification::create($request->validated());
-
-        return response()->json([
-            'message' => 'Notification created successfully',
-            'data' => $notification,
-        ], 201);
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Notification $notification): mixed
     {
+        $this->requireAdmin();
+
         $notification->load([
             'vehicle',
             'driver',
@@ -56,34 +37,6 @@ class NotificationController extends Controller
 
         return response()->json([
             'data' => $notification,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): void
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): void
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Notification $notification): mixed
-    {
-        $notification->delete();
-
-        return response()->json([
-            'message' => 'Notification deleted successfully',
         ]);
     }
 }

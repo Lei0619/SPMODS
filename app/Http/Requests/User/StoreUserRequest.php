@@ -12,7 +12,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->hasRole('admin') ?? false;
     }
 
     /**
@@ -24,12 +24,9 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-
             'email' => 'required|email|max:255|unique:users,email',
-
             'password' => 'required|string|min:8|confirmed',
-
-            'role' => 'required|in:admin,driver',
+            'role' => ['prohibited'],
         ];
     }
 
@@ -40,17 +37,13 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name.required' => 'Name is required.',
-
             'email.required' => 'Email is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email is already registered.',
-
             'password.required' => 'Password is required.',
             'password.min' => 'Password must be at least 8 characters.',
             'password.confirmed' => 'Password confirmation does not match.',
-
-            'role.required' => 'Please select a role.',
-            'role.in' => 'Invalid role selected.',
+            'role.prohibited' => 'Role assignment is not allowed through this endpoint.',
         ];
     }
 }

@@ -24,7 +24,10 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        $admin->assignRole(Role::findOrCreate('admin'));
+        $adminRole = Role::findOrCreate('admin', 'web');
+        Role::findOrCreate('driver', 'web');
+
+        $admin->assignRole($adminRole);
 
         User::factory(10)->create();
 

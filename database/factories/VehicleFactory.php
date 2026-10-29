@@ -21,7 +21,7 @@ class VehicleFactory extends Factory
     {
         return [
             'plate_number' => fake()->unique()->regexify('[A-Z]{3}\d{3}'),
-            'vehicle_type' => fake()->randomElement(['jeepney', 'bus', 'van', 'taxi']),
+            'vehicle_type' => 'jeepney',
             'max_capacity' => fake()->numberBetween(12, 50),
             'driver_id' => Driver::factory(),
             'route_id' => TransportRoute::factory(),

@@ -13,6 +13,8 @@ class TripController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return Trip::with([
             'vehicle',
             'passengerLogs',
@@ -21,18 +23,12 @@ class TripController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): void
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTripRequest $request): mixed
     {
+        $this->requireAdmin();
+
         $trip = Trip::create($request->validated());
 
         return response()->json(['message' => 'Trip created successfully', 'trip' => $trip], 201);
@@ -43,6 +39,8 @@ class TripController extends Controller
      */
     public function show(Trip $trip): mixed
     {
+        $this->requireAdmin();
+
         return response()->json($trip);
     }
 
@@ -67,6 +65,8 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip): mixed
     {
+        $this->requireAdmin();
+
         $trip->delete();
 
         return response()->json(['message' => 'Trip deleted successfully']);

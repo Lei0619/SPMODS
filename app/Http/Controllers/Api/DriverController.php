@@ -15,6 +15,8 @@ class DriverController extends Controller
      */
     public function index(): JsonResponse
     {
+        $this->requireAdmin();
+
         $drivers = Driver::query()
             ->with('vehicle')
             ->withCount('violations')
@@ -28,6 +30,8 @@ class DriverController extends Controller
      */
     public function store(StoreDriverRequest $request): JsonResponse
     {
+        $this->requireAdmin();
+
         $driver = Driver::create($request->validated());
 
         return response()->json([
@@ -41,6 +45,8 @@ class DriverController extends Controller
      */
     public function show(Driver $driver): JsonResponse
     {
+        $this->authorizeDriverAccess($driver);
+
         $driver->load([
             'vehicle',
             'violations',
@@ -54,6 +60,8 @@ class DriverController extends Controller
      */
     public function update(UpdateDriverRequest $request, Driver $driver): JsonResponse
     {
+        $this->authorizeDriverAccess($driver);
+
         $driver->update($request->validated());
 
         return response()->json([
@@ -67,6 +75,8 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver): JsonResponse
     {
+        $this->requireAdmin();
+
         $driver->delete();
 
         return response()->json([

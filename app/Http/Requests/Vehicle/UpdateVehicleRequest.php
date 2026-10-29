@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Http\Requests;
-
 namespace App\Http\Requests\Vehicle;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,7 +11,9 @@ class UpdateVehicleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user();
+
+        return ($user?->hasRole('admin') ?? false) || ($user?->hasRole('driver') ?? false);
     }
 
     /**
@@ -25,7 +25,7 @@ class UpdateVehicleRequest extends FormRequest
     {
         return [
             'plate_number' => ['sometimes', 'string', 'max:255', 'unique:vehicles,plate_number'],
-            'vehicle_type' => ['sometimes', 'string', 'max:255'],
+            'vehicle_type' => ['sometimes', 'string', 'max:255', 'in:jeepney'],
             'max_capacity' => ['sometimes', 'integer', 'min:1'],
             'driver_id' => ['sometimes', 'exists:drivers,id'],
             'route_id' => ['sometimes', 'exists:transport_routes,id'],

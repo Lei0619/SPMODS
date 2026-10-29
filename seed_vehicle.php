@@ -1,14 +1,15 @@
 <?php
 
 require 'vendor/autoload.php';
-$app = require 'bootstrap/app.php';
-$kernel = $app->make(Kernel::class);
-$kernel->bootstrap();
 
 use App\Models\Driver;
 use App\Models\TransportRoute;
 use App\Models\Vehicle;
 use Illuminate\Contracts\Console\Kernel;
+
+$app = require 'bootstrap/app.php';
+$kernel = $app->make(Kernel::class);
+$kernel->bootstrap();
 
 $driver = Driver::firstOrCreate(
     ['license_number' => 'ABC123'],
@@ -30,7 +31,7 @@ $route = TransportRoute::firstOrCreate(
 Vehicle::firstOrCreate(
     ['plate_number' => 'ABC-123'],
     [
-        'vehicle_type' => 'Bus',
+        'vehicle_type' => 'jeepney',
         'max_capacity' => 40,
         'driver_id' => $driver->id,
         'route_id' => $route->id,

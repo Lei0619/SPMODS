@@ -1,0 +1,136 @@
+[1mdiff --git a/tests/Feature/ApiSecurityTest.php b/tests/Feature/ApiSecurityTest.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0d4b0e5[m
+[1m--- /dev/null[m
+[1m+++ b/tests/Feature/ApiSecurityTest.php[m
+[36m@@ -0,0 +1,130 @@[m
+[32m+[m[32m<?php[m
+[32m+[m
+[32m+[m[32mnamespace Tests\Feature;[m
+[32m+[m
+[32m+[m[32muse App\Models\Driver;[m
+[32m+[m[32muse App\Models\User;[m
+[32m+[m[32muse Illuminate\Foundation\Testing\RefreshDatabase;[m
+[32m+[m[32muse Spatie\Permission\Models\Role;[m
+[32m+[m[32muse Tests\TestCase;[m
+[32m+[m
+[32m+[m[32mclass ApiSecurityTest extends TestCase[m
+[32m+[m[32m{[m
+[32m+[m[32m    use RefreshDatabase;[m
+[32m+[m
+[32m+[m[32m    protected function setUp(): void[m
+[32m+[m[32m    {[m
+[32m+[m[32m        parent::setUp();[m
+[32m+[m
+[32m+[m[32m        Role::findOrCreate('admin', 'web');[m
+[32m+[m[32m        Role::findOrCreate('driver', 'web');[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function test_guest_cannot_access_protected_api_routes(): void[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $this->getJson('/api/drivers')->assertStatus(401);[m
+[32m+[m[32m        $this->getJson('/api/vehicles')->assertStatus(401);[m
+[32m+[m[32m        $this->getJson('/api/users')->assertStatus(401);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function test_non_admin_cannot_manage_users(): void[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $user = User::factory()->create();[m
+[32m+[m[32m        $user->assignRole('driver');[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($user, 'sanctum')[m
+[32m+[m[32m            ->getJson('/api/users')[m
+[32m+[m[32m            ->assertStatus(403);[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($user, 'sanctum')[m
+[32m+[m[32m            ->postJson('/api/users', [[m
+[32m+[m[32m                'name' => 'Test User',[m
+[32m+[m[32m                'email' => 'test-user@example.com',[m
+[32m+[m[32m                'password' => 'Password123!',[m
+[32m+[m[32m                'password_confirmation' => 'Password123!',[m
+[32m+[m[32m            ])[m
+[32m+[m[32m            ->assertStatus(403);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function test_admin_user_creation_rejects_role_assignment(): void[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $admin = User::factory()->create();[m
+[32m+[m[32m        $admin->assignRole('admin');[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($admin, 'sanctum')[m
+[32m+[m[32m            ->postJson('/api/users', [[m
+[32m+[m[32m                'name' => 'Test Admin User',[m
+[32m+[m[32m                'email' => 'admin-user@example.com',[m
+[32m+[m[32m                'password' => 'Password123!',[m
+[32m+[m[32m                'password_confirmation' => 'Password123!',[m
+[32m+[m[32m                'role' => 'admin',[m
+[32m+[m[32m            ])[m
+[32m+[m[32m            ->assertStatus(422);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function test_driver_can_only_access_own_driver_record(): void[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $driverUser = User::factory()->create();[m
+[32m+[m[32m        $driverUser->assignRole('driver');[m
+[32m+[m
+[32m+[m[32m        $ownDriver = Driver::factory()->create([[m
+[32m+[m[32m            'users_id' => $driverUser->id,[m
+[32m+[m[32m        ]);[m
+[32m+[m
+[32m+[m[32m        $otherDriver = Driver::factory()->create();[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($driverUser, 'sanctum')[m
+[32m+[m[32m            ->getJson('/api/drivers/'.$ownDriver->id)[m
+[32m+[m[32m            ->assertOk();[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($driverUser, 'sanctum')[m
+[32m+[m[32m            ->putJson('/api/drivers/'.$ownDriver->id, [[m
+[32m+[m[32m                'first_name' => 'Updated',[m
+[32m+[m[32m                'last_name' => 'Driver',[m
+[32m+[m[32m                'license_number' => 'LIC-99999',[m
+[32m+[m[32m                'phone_number' => '09999999999',[m
+[32m+[m[32m                'status' => 'active',[m
+[32m+[m[32m            ])[m
+[32m+[m[32m            ->assertOk();[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($driverUser, 'sanctum')[m
+[32m+[m[32m            ->getJson('/api/drivers/'.$otherDriver->id)[m
+[32m+[m[32m            ->assertStatus(403);[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($driverUser, 'sanctum')[m
+[32m+[m[32m            ->putJson('/api/drivers/'.$otherDriver->id, [[m
+[32m+[m[32m                'first_name' => 'Nope',[m
+[32m+[m[32m                'last_name' => 'Nope',[m
+[32m+[m[32m                'license_number' => 'LIC-77777',[m
+[32m+[m[32m                'phone_number' => '09999999998',[m
+[32m+[m[32m                'status' => 'active',[m
+[32m+[m[32m            ])[m
+[32m+[m[32m            ->assertStatus(403);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function test_admin_can_manage_driver_records(): void[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $admin = User::factory()->create();[m
+[32m+[m[32m        $admin->assignRole('admin');[m
+[32m+[m
+[32m+[m[32m        $driver = Driver::factory()->create();[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($admin, 'sanctum')[m
+[32m+[m[32m            ->getJson('/api/drivers')[m
+[32m+[m[32m            ->assertOk();[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($admin, 'sanctum')[m
+[32m+[m[32m            ->postJson('/api/drivers', [[m
+[32m+[m[32m                'first_name' => 'Admin',[m
+[32m+[m[32m                'last_name' => 'Created',[m
+[32m+[m[32m                'license_number' => 'LIC-12345',[m
+[32m+[m[32m                'phone_number' => '09000000000',[m
+[32m+[m[32m                'status' => 'active',[m
+[32m+[m[32m            ])[m
+[32m+[m[32m            ->assertStatus(201);[m
+[32m+[m
+[32m+[m[32m        $this->actingAs($admin, 'sanctum')[m
+[32m+[m[32m            ->getJson('/api/drivers/'.$driver->id)[m
+[32m+[m[32m            ->assertOk();[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m

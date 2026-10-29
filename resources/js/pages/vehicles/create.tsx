@@ -14,7 +14,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 export default function CreateVehicle() {
     const [form, setForm] = useState({
         plate_number: '',
-        vehicle_type: '',
+        vehicle_type: 'jeepney',
         max_capacity: '',
         device_id: '',
         driver_id: '',
@@ -109,9 +109,6 @@ export default function CreateVehicle() {
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Select vehicle type</option>
-                                <option value="bus">Bus</option>
-                                <option value="van">Van</option>
                                 <option value="jeepney">Jeepney</option>
                             </CFormSelect>
                         </div>

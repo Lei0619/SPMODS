@@ -12,17 +12,11 @@ class PassengerLogController extends Controller
      */
     public function index(): mixed
     {
+        $this->requireAdmin();
+
         return PassengerLog::with([
             'trip',
         ])->get();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(PassengerLog $request): void
-    {
-        //
     }
 
     /**
@@ -30,6 +24,8 @@ class PassengerLogController extends Controller
      */
     public function store(Request $request): mixed
     {
+        $this->requireAdmin();
+
         $passengerLog = PassengerLog::create($request->all());
 
         return response()->json($passengerLog, 201);
@@ -40,19 +36,13 @@ class PassengerLogController extends Controller
      */
     public function show(PassengerLog $passengerLog): mixed
     {
+        $this->requireAdmin();
+
         $passengerLog->load([
             'trip',
         ]);
 
         return response()->json($passengerLog);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): void
-    {
-        //
     }
 
     /**
