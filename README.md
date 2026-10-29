@@ -1,11 +1,12 @@
-# SPMods
-### Smart Passenger Counter & Load Balancer
+## Smart Passenger Counter & Load Balancer
 
 **Safer Rides. Fairer Loads. Smarter Transport.**
 
-SPMods is a web-based passenger monitoring and overloading detection system designed for jeepneys and UV Express vehicles in the Philippines. It combines an Arduino-based hardware prototype with a Laravel and React web application to monitor passenger counts, manage transport records, and help identify potential overloading violations.
+SPMods is an academic project exploring passenger occupancy monitoring and overloading detection for jeepney vehicles in the Philippines. It combines an Arduino-based passenger-counting prototype with a Laravel and React web application for managing driver and vehicle records, and supporting the review of potential capacity violations.
 
-> **Project Status:** In Development
+The project brings together hardware prototyping, backend development, database management, API security, and software quality assurance. Its goal is to explore how connected systems can help make passenger occupancy information easier to monitor and transport records easier to manage.
+
+**Project status:** In Development
 
 ---
 
@@ -15,56 +16,101 @@ SPMods is a web-based passenger monitoring and overloading detection system desi
 - [Objectives](#objectives)
 - [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
+- [System Architecture](#system-architecture)
 - [Database Overview](#database-overview)
-- [API Endpoints](#api-endpoints)
+- [API and Security](#api-and-security)
 - [Installation](#installation)
 - [Running the Project](#running-the-project)
 - [Testing and Quality Assurance](#testing-and-quality-assurance)
-- [Security](#security)
+- [Security Considerations](#security-considerations)
 - [Future Improvements](#future-improvements)
 - [Disclaimer](#disclaimer)
-- [Credits & Acknowledgments](#credits--acknowledgments)
+- [Credits and Acknowledgments](#credits-and-acknowledgments)
 
 ---
 
 ## Overview
 
-Overloading can compromise passenger safety and make transport regulation more difficult. SPMods aims to provide a prototype system for monitoring passenger occupancy and maintaining organized transport records.
+Passenger overloading is a safety concern in public transportation. SPMods explores how passenger counting and organized transport records can support occupancy monitoring and the review of potential capacity violations.
 
-The system combines:
+The project has two main components:
 
-- An Arduino Uno R3 prototype for passenger counting.
-- A Laravel backend for business logic and data management.
-- A React-based administrative interface.
-- A MySQL database for storing system records.
-- API endpoints for communication between application components.
+- **Arduino prototype:** Uses infrared sensors to detect passenger entry and exit. An LCD displays passenger-count information, while LEDs and a buzzer provide local alerts when configured capacity limits are reached or exceeded.
+- **Web application:** Uses Laravel for backend logic and API handling, React with Inertia.js for the user interface, and MySQL for persistent application data.
 
-SPMods is intended as a learning and prototyping project demonstrating the integration of web development, database management, hardware, API development, and software quality assurance.
+The web application focuses on driver management, vehicle management, transport routes, authentication and authorization, violation records, and notifications. Automated tests and quality assurance activities support the development process.
+
+SPMods is a prototype and learning project. Features should be considered implemented only when they are present in the current codebase and have been verified.
 
 ## Objectives
 
-1. Monitor passenger entry and exit using infrared sensors.
-2. Track passenger counts against a vehicle's configured capacity.
-3. Provide visual and audible alerts when the capacity threshold is reached or exceeded.
-4. Maintain records for drivers, vehicles, routes, trips, and passenger counts.
-5. Record potential overloading incidents for review.
-6. Provide role-based access for authorized system users.
-7. Apply software testing practices to improve system reliability and security.
+1. Explore passenger entry and exit detection using infrared sensors.
+2. Compare passenger counts against a vehicle's configured capacity.
+3. Provide local visual and audible alerts through the hardware prototype.
+4. Maintain organized driver, vehicle, and transport-route records.
+5. Support the recording and review of potential overloading violations.
+6. Protect application resources with appropriate authentication and authorization.
+7. Maintain notification records for relevant system events.
+8. Improve application reliability through automated testing, API testing, and documented quality assurance practices.
+9. Establish a foundation for future communication between the Arduino prototype and the web application.
 
 ## Key Features
 
-- **Passenger Counting:** Detect entry and exit events through IR sensors.
-- **Capacity Monitoring:** Compare passenger counts with configured vehicle capacity.
-- **Overloading Alerts:** Use LEDs and a buzzer in the hardware prototype.
-- **Vehicle Management:** Store vehicle details, plate numbers, and capacity.
-- **Driver Management:** Maintain driver profiles and associated records.
-- **Route Management:** Organize transport routes and destinations.
-- **Trip Monitoring:** Store trip and passenger-log records.
-- **Violation Tracking:** Maintain records of potential capacity violations.
-- **Notifications:** Support system notifications for relevant events.
-- **Role-Based Access:** Differentiate access for administrators, operators, and inspectors.
-- **API Development:** Provide backend endpoints for application integration.
-- **Quality Assurance:** Document test cases, execution results, evidence, and defects.
+### Arduino Passenger Counting
+
+- Detect passenger entry and exit through infrared sensors.
+- Maintain a passenger count on the hardware prototype.
+- Display count information on a 16×2 LCD with I2C.
+- Use LEDs and a buzzer for local capacity alerts.
+
+Sensor accuracy depends on the prototype's physical setup and testing. Direct transmission of Arduino readings to the web application is planned and should not be considered implemented until verified.
+
+### Driver Management
+
+- Maintain driver profiles and associated information.
+- Associate driver records with application users where configured.
+- Validate submitted information through server-side request validation.
+- Apply access restrictions to protected driver resources.
+
+### Vehicle Management
+
+- Maintain vehicle details, including plate numbers and configured capacity.
+- Support vehicle records and their relevant relationships.
+- Validate vehicle-related requests through the backend.
+
+### Transport Route Management
+
+- Organize transport routes, including route names, origins, and destinations.
+- Maintain route records for use by supported application features.
+
+### Violations
+
+- Maintain records of potential overloading or capacity-related violations.
+- Support review of recorded information.
+
+Violation records are for prototype and administrative purposes. They do not constitute official enforcement decisions.
+
+### Notifications
+
+- Maintain notification records for relevant system events.
+- Apply the access rules configured for notification resources.
+
+### Authentication and API Security
+
+- Use Laravel authentication for protected application resources.
+- Use Laravel Sanctum for configured API authentication.
+- Apply role-based restrictions where required.
+- Validate incoming requests on the server.
+- Test unauthorized access and permission boundaries.
+
+### Quality Assurance
+
+- Prepare and execute test cases.
+- Record actual results and supporting evidence.
+- Document defects and retest fixes.
+- Run automated tests, static analysis, and code-formatting checks.
+
+Feature availability can change as development progresses. Refer to the current routes, controllers, migrations, and tests when confirming the implementation status of a specific operation.
 
 ---
 
@@ -73,82 +119,106 @@ SPMods is intended as a learning and prototyping project demonstrating the integ
 | Technology | Purpose |
 |---|---|
 | PHP | Backend programming language |
-| Laravel 13 | Backend framework |
-| React | User interface |
-| TypeScript / TSX | Frontend development |
-| Inertia.js | Connects Laravel and React |
+| Laravel 13 | Backend framework and application logic |
+| React | User interface development |
+| TypeScript / TSX | Typed frontend development |
+| Inertia.js | Integration between Laravel and React |
 | CoreUI React | Administrative interface components |
 | MySQL | Relational database |
-| Laravel Sanctum | API authentication |
-| Spatie Laravel Permission | Roles and permissions |
-| Docker Compose | Local development environment |
-| Pest / PHPStan / Laravel Pint | Testing, static analysis, and code formatting |
+| Laravel Sanctum | Authentication for configured API routes |
+| Spatie Laravel Permission | Role and permission management |
+| Docker Compose | Containerized development environment |
+| Arduino Uno R3 | Hardware prototyping and sensor control |
+| Infrared sensors | Passenger entry and exit detection |
+| 16×2 LCD with I2C | Passenger-count display |
+| LEDs and buzzer | Local capacity alerts |
+| Pest | Automated application testing |
+| PHPStan | Static code analysis |
+| Laravel Pint | Code formatting |
+| Postman / cURL | API testing |
+
+The table describes the technologies used or intended for the project. The exact setup depends on the current repository configuration.
 
 ---
 
-The web application manages transport records and backend operations. The Arduino prototype handles sensor-based passenger counting and local alerts.
+## System Architecture
 
-> **Note:** Direct Arduino-to-Laravel communication is a planned integration unless explicitly implemented and verified in the current version.
+SPMods is being developed around a hardware prototype and a web application.
+
+### Hardware prototype
+
+The Arduino reads infrared sensor inputs, updates the local passenger count, and provides feedback through the LCD, LEDs, and buzzer.
+
+### Web application
+
+The Laravel backend handles application logic, request validation, authentication, authorization, and database operations. React components integrated through Inertia.js provide the web interface for supported management features.
+
+### Planned integration
+
+Direct Arduino-to-Laravel communication is a planned improvement. Once implemented, this integration is intended to allow hardware readings to be transmitted to the web application for centralized storage and review.
+
+Until the integration is implemented and tested, the hardware prototype and web application should be treated as separate components.
 
 ---
 
 ## Database Overview
 
-The MySQL database is named `smart_passenger_monitoring`.
+The configured MySQL database is named `smart_passenger_monitoring`.
 
-| Table | Purpose |
+The current project scope focuses on the following data areas:
+
+| Data area | Purpose |
 |---|---|
-| `users` | User accounts and role-related access |
-| `drivers` | Driver profiles and license information |
-| `vehicles` | Vehicle details, capacity, and assignments |
-| `transport_routes` | Route names, origins, and destinations |
-| `trips` | Trip records and associated transport data |
-| `passenger_logs` | Passenger counts and occupancy information |
-| `violations` | Records of potential overloading incidents |
-| `notifications` | System notification records |
-| `personal_access_tokens` | Sanctum API token records |
+| `users` | Application accounts and authentication |
+| `drivers` | Driver profiles and related information |
+| `vehicles` | Vehicle details, capacity, and configured relationships |
+| `violations` | Records of potential capacity-related violations |
+| `notifications` | Notification records |
+| `personal_access_tokens` | Laravel Sanctum personal access tokens, where used |
 
-Relationships connect drivers, vehicles, routes, trips, passenger logs, violations, and notifications.
+Laravel's authentication and authorization packages may also maintain supporting tables for permissions, sessions, passkeys, two-factor authentication, queues, and caching.
 
-The actual migrations and model relationships are the source of truth for the current database structure.
+This overview reflects the intended current scope, not a complete inventory of every table present in the database. Older migrations may remain in the repository or local database even when the corresponding feature is no longer part of active development. The migrations and model relationships in the current codebase remain the source of truth for the actual schema.
 
 ---
 
-## API Endpoints
+## API and Security
+
+The Laravel application exposes API routes for supported resources. The available operations and their access rules are determined by the current route configuration, middleware, controllers, and request validation.
 
 ### Driver API
 
-The driver API uses Laravel resource routes.
+The driver resource routes have been configured to require Sanctum authentication and an administrator role.
 
-| Method | Endpoint | Purpose |
+| Method | Endpoint | Intended operation |
 |---|---|---|
-| GET | `/api/drivers` | List drivers |
-| POST | `/api/drivers` | Create a driver |
-| GET | `/api/drivers/{driver}` | Retrieve a driver |
-| PUT / PATCH | `/api/drivers/{driver}` | Update a driver |
-| DELETE | `/api/drivers/{driver}` | Delete a driver |
+| GET | `/api/drivers` | List driver records |
+| POST | `/api/drivers` | Create a driver record |
+| GET | `/api/drivers/{driver}` | Retrieve a driver record |
+| PUT / PATCH | `/api/drivers/{driver}` | Update a driver record |
+| DELETE | `/api/drivers/{driver}` | Delete a driver record |
 
-### Authentication and Authorization
+These are the standard Laravel resource route patterns. Confirm the currently registered routes before assuming every operation is available.
 
-The driver API routes are configured to use:
+### Authentication and authorization
 
-- `auth:sanctum` — requires an authenticated request.
-- `role:admin` — restricts access to users with the administrator role.
+- `auth:sanctum` protects routes that require an authenticated request.
+- `role:admin` restricts configured routes to users with the administrator role.
+- Server-side request validation checks incoming data before it is processed.
 
-An unauthenticated JSON request to `GET /api/drivers` returned:
+An unauthenticated request to `GET /api/drivers` has previously been observed returning `401 Unauthorized` with a JSON message indicating that the request is unauthenticated. This observation confirms the behavior of that request under the tested conditions; other routes and role combinations should be verified independently.
 
-```http
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json
+To inspect the registered API routes and middleware, run:
+
+```bash
+php artisan route:list --path=api -v
 ```
 
-```json
-{
-  "message": "Unauthenticated."
-}
-```
+For the configured Docker environment:
 
-This verifies the observed unauthenticated behavior for the driver listing endpoint. The remaining endpoints, authenticated role checks, and CRUD operations require their own tests.
+```bash
+docker compose exec laravel.test php artisan route:list --path=api -v
+```
 
 ---
 
@@ -156,26 +226,25 @@ This verifies the observed unauthenticated behavior for the driver listing endpo
 
 ### Prerequisites
 
-Install the tools required by your development environment:
+For Docker-based development:
 
 - Git
-- Docker Desktop with Docker Compose
+- Docker Desktop
+- Docker Compose
 - A compatible code editor, such as Visual Studio Code
 
-For a direct local installation, you will also need compatible PHP, Composer, Node.js, npm, and MySQL installations.
+For direct local development, install compatible versions of PHP, Composer, Node.js, npm, and MySQL.
 
-### 1. Clone the Repository
+Use the versions and setup instructions specified by the current repository where available.
 
-Replace the example URL with your actual GitHub repository URL.
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/spmods.git
-cd spmods
+git clone https://github.com/Lei0619/SPMODS.git
+cd SPMODS
 ```
 
-### 2. Install Dependencies
-
-For the Docker-based development environment, use the project's documented container setup.
+### 2. Install dependencies
 
 For a direct local installation:
 
@@ -184,179 +253,202 @@ composer install
 npm install
 ```
 
-### 3. Configure the Environment
+For Docker-based development, follow the project's configured container and dependency setup.
 
-Create your environment file if it does not exist:
+### 3. Configure environment variables
+
+Create an environment file if one does not already exist.
+
+On macOS or Linux:
 
 ```bash
 cp .env.example .env
 ```
 
-Configure the database connection and other required environment variables.
+On Windows PowerShell:
 
-Do not commit `.env` or other files containing credentials.
+```powershell
+Copy-Item .env.example .env
+```
 
-### 4. Generate the Application Key
+Configure the database connection and other required environment variables in `.env`.
+
+Do not commit `.env` or other files containing credentials, tokens, or secrets.
+
+### 4. Generate the application key
+
+For direct local development:
 
 ```bash
 php artisan key:generate
 ```
 
-### 5. Run Database Migrations
+For Docker-based development, run the command inside the configured Laravel container.
 
-Review the configured database connection before running migrations.
+### 5. Prepare the database
+
+Check the database configuration and confirm that the intended database exists before running migrations.
 
 ```bash
 php artisan migrate
 ```
 
-Run seeders only if they are configured for your environment and you understand the data they will create.
+Review seeders before running them, particularly when using a database that contains data you need to preserve.
 
-### 6. Start the Development Server
+### 6. Start the application
 
-For a direct local installation:
+For direct local development, start Laravel:
 
 ```bash
 php artisan serve
 ```
 
-In another terminal:
+In another terminal, start the frontend development server:
 
 ```bash
 npm run dev
 ```
 
-For the Docker environment, use the project's Docker Compose services and documented startup commands.
+For Docker-based development, use the project's Docker Compose configuration and documented startup commands.
 
 ---
 
 ## Running the Project
 
-For the Docker-based environment, run Artisan commands through the Laravel container:
+For Docker-based development, run Artisan commands through the Laravel container.
+
+List the registered routes:
 
 ```bash
 docker compose exec laravel.test php artisan route:list
 ```
 
-To inspect the driver API routes and middleware:
+Inspect API routes and their middleware:
 
 ```bash
-docker compose exec laravel.test php artisan route:list --path=api/drivers -v
+docker compose exec laravel.test php artisan route:list --path=api -v
 ```
 
-The actual local URL and port depend on your Docker Compose configuration.
+The local URL and port depend on the Docker Compose configuration or local development server settings.
 
 ---
 
 ## Testing and Quality Assurance
 
-SPMods includes a documented QA workflow using a dedicated test workbook.
+Quality assurance is part of the SPMods development workflow. Testing helps identify defects, verify expected behavior, and reduce the risk of regressions as the application changes.
 
-The workflow covers:
+The workflow includes:
 
-1. Reviewing test plans, scenarios, and expected results.
-2. Preparing preconditions and synthetic test data.
-3. Executing test cases.
-4. Recording actual results and statuses.
-5. Saving terminal output, screenshots, and other evidence.
+1. Defining test scope, preconditions, and expected results.
+2. Preparing suitable test data.
+3. Executing documented test cases.
+4. Recording actual results and pass/fail status.
+5. Capturing relevant screenshots, terminal output, and API responses.
 6. Logging defects and retesting fixes.
-7. Performing regression testing.
+7. Running regression tests on affected functionality.
 
-### QA Tools
+### QA tools
 
-- **Pest:** Automated application tests.
-- **PHPStan:** Static analysis.
-- **Laravel Pint:** Code formatting.
-- **Postman / cURL:** API testing.
-- **QA Workbook:** Test plans, scenarios, cases, execution logs, defect records, and traceability.
-- **Jira (optional):** Track defects, development tasks, priorities, and retesting workflow.
+| Tool | Purpose |
+|---|---|
+| Pest | Automated application and feature tests |
+| PHPStan | Static analysis |
+| Laravel Pint | Code style checks and formatting |
+| Postman / cURL | Manual API testing |
+| QA workbook | Test cases, execution records, evidence, and defect tracking |
+| Jira (optional) | Task and defect tracking |
 
-### Example Commands
+### Example commands
+
+Run the automated test suite:
 
 ```bash
 php artisan test
 ```
 
+Run PHPStan:
+
 ```bash
 ./vendor/bin/phpstan analyse --memory-limit=1G
 ```
+
+Check formatting without changing files:
 
 ```bash
 ./vendor/bin/pint --test
 ```
 
-For Docker-based execution, run the corresponding commands inside the Laravel container.
+For Docker-based development, execute the corresponding commands inside the Laravel container.
 
-### API Security Testing
+### API security testing
 
-The driver API should be tested for:
+Security tests should cover the access rules defined for each protected resource, including:
 
-- Unauthenticated access.
-- Access by authenticated non-admin users.
-- Access by authorized administrators.
-- Request validation and duplicate records.
-- Successful and unsuccessful CRUD operations.
-- Appropriate handling of nonexistent records.
+- Unauthenticated requests.
+- Authenticated users without the required role.
+- Authorized administrator requests.
+- Invalid or incomplete request data.
+- Duplicate or conflicting records.
+- Successful and unsuccessful operations.
+- Requests involving nonexistent records.
 - Data integrity and related-record constraints.
 
-A test must only be marked **Pass** when the observed result satisfies its documented expected result.
+A test should be marked **Pass** only when the observed result meets its documented expected result. Test summaries should reflect the tests actually executed.
 
 ---
 
-## Security
+## Security Considerations
 
-SPMods uses Laravel's authentication and authorization capabilities.
+SPMods uses Laravel's authentication, validation, and authorization capabilities to protect application resources.
 
-Security considerations include:
+Security practices include:
 
-- Sanctum authentication for protected API routes.
-- Role-based access checks through Spatie Laravel Permission.
-- Server-side request validation.
-- Protection of environment files and credentials.
-- Restricted access to driver and transport records.
-- Safe handling of API tokens and session credentials.
-- Separate, limited authentication for future hardware integration.
+- Applying Sanctum authentication to protected API routes.
+- Enforcing role-based access where required.
+- Validating request data on the server.
+- Restricting access to administrative resources.
+- Keeping credentials and secrets out of version control.
+- Handling API tokens and session credentials carefully.
+- Designing limited authentication for future hardware communication.
 
-Installing authentication packages alone does not secure every endpoint. Each route must be configured and tested according to its intended access rules.
+Installing authentication packages does not automatically secure every endpoint. Routes need the appropriate middleware, authorization checks, and tests for their intended access rules.
 
-Never embed a long-lived administrator token in Arduino firmware.
+Arduino firmware should not contain a long-lived administrator token. Future hardware integration should use a dedicated device-authentication mechanism with limited permissions.
 
 ---
 
 ## Future Improvements
 
-- Complete Arduino-to-Laravel API integration.
-- Add dedicated device authentication.
-- Improve sensor accuracy and prevent duplicate counts.
-- Add live occupancy monitoring to the web dashboard.
-- Expand automated API and feature tests.
-- Add comprehensive role and permission tests.
-- Improve reporting and visualization of passenger and violation records.
-- Add deployment documentation and production security checks.
+Planned improvements include:
+
+- Implementing and testing direct Arduino-to-Laravel communication.
+- Introducing dedicated authentication for hardware devices.
+- Improving sensor accuracy and reducing duplicate passenger counts.
+- Adding live occupancy information to the web dashboard.
+- Expanding automated API and feature-test coverage.
+- Strengthening role and permission tests.
+- Improving reports for passenger capacity and potential violations.
+- Reviewing deployment configuration and production security.
+
+These items are planned work and should not be interpreted as completed features.
 
 ---
 
 ## Disclaimer
 
-SPMods is an academic and prototype project intended to demonstrate passenger counting, capacity monitoring, web application development, and software testing.
+SPMods is an academic prototype intended to demonstrate passenger counting, capacity monitoring, transport record management, API security, and software quality assurance.
 
-Its records and alerts should not be treated as official enforcement decisions without appropriate validation, operational testing, and authorization by the relevant transport authorities.
+Sensor readings can be affected by hardware placement, environmental conditions, and counting errors. Records and alerts generated by the prototype should not be treated as official enforcement decisions without appropriate validation, operational testing, and authorization by the relevant transport authorities.
 
----
-
-## Project Status
-
-**Status:** In Development
-
-SPMods is being developed as a practical learning project combining backend development, frontend integration, hardware prototyping, database design, API security, and quality assurance.
+SPMods is not a substitute for certified passenger-counting equipment or established transport enforcement procedures.
 
 ---
 
-## Credits & Acknowledgments
+## Credits and Acknowledgments
 
 **Lei Ann Judea C. Dico**  
-*Project Creator & Developer*
+*Project Creator and Developer*
 
-SPMods is an independently developed project focused on passenger occupancy monitoring, overloading detection, backend development, hardware prototyping, and software quality assurance.
+SPMods is an independently developed academic project exploring how software and hardware can work together to support passenger occupancy monitoring and transport record management.
 
 **Safer Rides. Fairer Loads. Smarter Transport.**
