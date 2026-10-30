@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use App\Models\DriverApp;
 use App\Models\Notification;
 use App\Models\Trip;
 use App\Models\Vehicle;
@@ -26,6 +27,13 @@ class DashboardController extends Controller
                     ->take(5)
                     ->get(),
             ],
+        ]);
+    }
+
+    public function show(DriverApp $driverApp): mixed
+    {
+        return Inertia::render('admin/driver-applications/show', [
+            'driverApp' => $driverApp,
         ]);
     }
 }

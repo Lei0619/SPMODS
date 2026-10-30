@@ -91,6 +91,26 @@ export default function Dashboard({ dashboard }: Props) {
                     </Link>
                 </CCardBody>
             </CCard>
+
+            {/* Driver Application Management */}
+            <CCard className="mb-4">
+                <CCardHeader>
+                    <strong>Driver Application Management</strong>
+                </CCardHeader>
+
+                <CCardBody>
+                    <p>
+                        Review and manage driver applications, including
+                        approvals, rejections, and pending applications.
+                    </p>
+
+                    <Link href="/admin/driver-applications">
+                        <CButton color="primary">
+                            View Driver Applications
+                        </CButton>
+                    </Link>
+                </CCardBody>
+            </CCard>
         </div>
     );
 }
