@@ -44,8 +44,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/driver-applications', function () {
         return Inertia::render('admin/Driver Application/driver-applications');
     })->name('admin.driver-applications.index');
-    Route::get('/admin/driver-applications/{driverApp}', [DashboardController::class, 'show'])
-        ->name('admin.driver-applications.show');
 });
 
 // admin's vehicle routes

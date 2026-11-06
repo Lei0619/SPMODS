@@ -43,6 +43,12 @@ class DriverAppController extends Controller
             'license_expiry_date' => $validatedData['license_expiry_date'],
         ]);
 
+        $driverApp->applicationsDocuments()->create([
+            'license_front_image_path' => $validatedData['license_front_image_path'],
+            'license_back_image_path' => $validatedData['license_back_image_path'],
+            'supporting_document_path' => $validatedData['supporting_document_path'],
+        ]);
+
         $driverApp = DriverApp::findOrFail($driverApp->id);
         DriverApplicationSubmitted::dispatch($driverApp);
 
