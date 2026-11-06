@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\GoogleFormApplicationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PassengerLogController;
 use App\Http\Controllers\TransportRouteController;
@@ -23,3 +24,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->only(['index', 'show']);
     Route::apiResource('passenger-logs', PassengerLogController::class);
 });
+
+Route::post('google-form-applications', [GoogleFormApplicationController::class, 'store']);
