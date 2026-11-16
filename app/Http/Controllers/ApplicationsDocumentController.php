@@ -24,9 +24,7 @@ class ApplicationsDocumentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
-    {
-    }
+    public function create(): void {}
 
     /**
      * Store a newly created resource in storage.
@@ -49,9 +47,7 @@ class ApplicationsDocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ApplicationsDocument $applicationsDocument): void
-    {
-    }
+    public function edit(ApplicationsDocument $applicationsDocument): void {}
 
     /**
      * Update the specified resource in storage.
