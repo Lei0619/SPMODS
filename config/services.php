@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'google-forms' => [
+        'token' => env('GOOGLE_FORMS_TOKEN'),
+    ],
 ];

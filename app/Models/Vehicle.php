@@ -21,7 +21,6 @@ class Vehicle extends Model
         'max_capacity',
         'device_id',
         'driver_id',
-        'route_id',
         'status',
     ];
 

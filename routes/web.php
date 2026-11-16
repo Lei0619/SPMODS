@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverAppController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DriverDashboardController;
+use App\Http\Controllers\ReadStatusController;
 use App\Http\Controllers\VehicleController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('vehicles.create');
     Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
         ->name('vehicles.edit');
+});
+
+// admin's notification routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::patch('notifications/{notification}/read', [ReadStatusController::class, 'markAsRead'])
+        ->name('notifications.read');
 });
 
 // driver routes

@@ -1,4 +1,4 @@
-import { usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { Bell } from 'lucide-react';
 import { useState } from 'react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -88,15 +88,49 @@ export default function AppSidebarHeader({
                                                 : 'bg-muted font-medium'
                                         }`}
                                     >
-                                        <p>
-                                            {notification.data.message ??
-                                                'You have a new notification.'}
-                                        </p>
+                                        {notification.data.driver_app_id ? (
+                                            <Link
+                                                href={`/admin/driver-applications/${notification.data.driver_app_id}`}
+                                                className="block rounded-md px-3 py-3 hover:bg-accent"
+                                                onClick={(event) => {
+                                                    event.preventDefault();
+                                                    setIsOpen(false);
 
-                                        {notification.data.full_name && (
-                                            <p className="mt-1 text-muted-foreground">
-                                                Applicant:{' '}
-                                                {notification.data.full_name}
+                                                    router.patch(
+                                                        `/notifications/${notification.id}/read`,
+                                                        {},
+                                                        {
+                                                            preserveScroll: true,
+                                                            onSuccess: () => {
+                                                                router.visit(
+                                                                    `/admin/driver-applications/${notification.data.driver_app_id}`,
+                                                                );
+                                                            },
+                                                        },
+                                                    );
+                                                }}
+                                            >
+                                                <p>
+                                                    {notification.data
+                                                        .message ??
+                                                        'You have a new notification.'}
+                                                </p>
+
+                                                {notification.data
+                                                    .full_name && (
+                                                    <p className="mt-1 text-muted-foreground">
+                                                        Applicant:{' '}
+                                                        {
+                                                            notification.data
+                                                                .full_name
+                                                        }
+                                                    </p>
+                                                )}
+                                            </Link>
+                                        ) : (
+                                            <p className="px-3 py-3">
+                                                {notification.data.message ??
+                                                    'You have a new notification.'}
                                             </p>
                                         )}
                                     </li>
