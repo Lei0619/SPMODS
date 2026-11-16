@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ApplicationsDocument extends Model
 {
+    protected $table = 'application_documents';
+
     protected $fillable = [
         'driver_app_id',
         'google_form_response_id',

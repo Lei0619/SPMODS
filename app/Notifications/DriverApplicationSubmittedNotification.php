@@ -37,7 +37,7 @@ class DriverApplicationSubmittedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'A new driver application has been submitted.',
+            // 'message' => 'A new driver application has been submitted.',
             'driver_app_id' => $this->driverApp->id,
             'full_name' => $this->driverApp->full_name,
         ];
