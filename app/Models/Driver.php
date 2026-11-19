@@ -15,6 +15,7 @@ class Driver extends Model
     use HasFactory;
 
     protected $fillable = [
+        'driver_app_id',
         'first_name',
         'last_name',
         'license_number',
@@ -38,5 +39,10 @@ class Driver extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
+    }
+    /** @return BelongsTo<DriverApp, $this> */
+    public function driverApp(): BelongsTo
+    {
+        return $this->belongsTo(DriverApp::class, 'driver_app_id', 'id');
     }
 }

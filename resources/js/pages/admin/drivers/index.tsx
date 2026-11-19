@@ -34,14 +34,15 @@ type Violation = {
 
 type Driver = {
     id: number;
-    first_name: string;
-    last_name: string;
     license_number: string;
     phone_number: string;
     status: string;
+    driver_app?: {
+        full_name: string;
+    } | null;
     vehicle?: Vehicle | null;
     violations?: Violation[];
-};
+}
 
 type Props = {
     drivers: Driver[];
@@ -105,19 +106,9 @@ export default function DriverIndex({ drivers }: Props) {
                             <CTableRow>
                                 <CTableHeaderCell>ID</CTableHeaderCell>
 
-                                <CTableHeaderCell>
-                                    Plate Number
-                                </CTableHeaderCell>
-
-                                <CTableHeaderCell>
-                                    Vehicle Type
-                                </CTableHeaderCell>
-
                                 <CTableHeaderCell>Capacity</CTableHeaderCell>
 
-                                <CTableHeaderCell>First Name</CTableHeaderCell>
-
-                                <CTableHeaderCell>Last Name</CTableHeaderCell>
+                                <CTableHeaderCell>Full Name</CTableHeaderCell>
 
                                 <CTableHeaderCell>
                                     License Number
@@ -139,36 +130,24 @@ export default function DriverIndex({ drivers }: Props) {
                                     {/* ID */}
                                     <CTableDataCell>{driver.id}</CTableDataCell>
 
-                                    {/* Plate Number */}
-                                    <CTableDataCell>
-                                        {driver.vehicle?.plate_number ??
-                                            'No vehicle'}
-                                    </CTableDataCell>
-
-                                    {/* Vehicle Type */}
-                                    <CTableDataCell>
-                                        {driver.vehicle?.vehicle_type ??
-                                            'No vehicle'}
-                                    </CTableDataCell>
-
                                     {/* Capacity */}
                                     <CTableDataCell>
                                         {driver.vehicle?.max_capacity ?? 'N/A'}
                                     </CTableDataCell>
 
-                                    {/* First Name */}
+                                    {/* Full Name */}
                                     <CTableDataCell>
                                         <Link href={`/drivers/${driver.id}`}>
-                                            {driver.first_name}
+                                            {driver.driver_app?.full_name ?? 'Application not linked'}
                                         </Link>
                                     </CTableDataCell>
 
                                     {/* Last Name */}
-                                    <CTableDataCell>
+                                    {/* <CTableDataCell>
                                         <Link href={`/drivers/${driver.id}`}>
                                             {driver.last_name}
                                         </Link>
-                                    </CTableDataCell>
+                                    </CTableDataCell> */}
 
                                     {/* License Number */}
                                     <CTableDataCell>

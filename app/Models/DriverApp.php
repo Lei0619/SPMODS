@@ -6,6 +6,7 @@ use Database\Factories\DriverAppFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DriverApp extends Model
 {
@@ -19,11 +20,20 @@ class DriverApp extends Model
         'license_number',
         'license_type',
         'license_expiry_date',
+        'status'
     ];
 
     /** @return HasMany<ApplicationsDocument, $this> */
     public function applicationsDocuments(): HasMany
     {
         return $this->hasMany(ApplicationsDocument::class);
+    }
+
+    //bidirectional relationship with Driver model
+
+    /** @return HasOne<Driver, $this> */
+    public function driver(): HasOne
+    {
+        return $this->hasOne(Driver::class);
     }
 }
