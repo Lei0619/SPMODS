@@ -20,7 +20,7 @@ class DriverApp extends Model
         'license_number',
         'license_type',
         'license_expiry_date',
-        'status'
+        'status',
     ];
 
     /** @return HasMany<ApplicationsDocument, $this> */
@@ -29,7 +29,7 @@ class DriverApp extends Model
         return $this->hasMany(ApplicationsDocument::class);
     }
 
-    //bidirectional relationship with Driver model
+    // bidirectional relationship with Driver model
 
     /** @return HasOne<Driver, $this> */
     public function driver(): HasOne

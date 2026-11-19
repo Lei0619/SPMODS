@@ -42,7 +42,7 @@ type Driver = {
     } | null;
     vehicle?: Vehicle | null;
     violations?: Violation[];
-}
+};
 
 type Props = {
     drivers: Driver[];
@@ -138,7 +138,8 @@ export default function DriverIndex({ drivers }: Props) {
                                     {/* Full Name */}
                                     <CTableDataCell>
                                         <Link href={`/drivers/${driver.id}`}>
-                                            {driver.driver_app?.full_name ?? 'Application not linked'}
+                                            {driver.driver_app?.full_name ??
+                                                'Application not linked'}
                                         </Link>
                                     </CTableDataCell>
 
