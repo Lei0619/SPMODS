@@ -16,6 +16,7 @@ return new class extends Migration
                 ->default('pending');
         });
     }
+
     /**
      * Reverse the migrations.
      */

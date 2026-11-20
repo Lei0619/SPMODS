@@ -40,6 +40,7 @@ class Driver extends Model
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
     }
+
     /** @return BelongsTo<DriverApp, $this> */
     public function driverApp(): BelongsTo
     {

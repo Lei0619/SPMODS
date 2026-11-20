@@ -21,6 +21,12 @@ return new class extends Migration
                 $table->foreignIdFor(Trip::class)->constrained()->cascadeOnDelete();
             }
         });
+
+        if (! Schema::hasColumn('driver_apps', 'status')) {
+            Schema::table('driver_apps', function (Blueprint $table) {
+                $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            });
+        }
     }
 
     /**

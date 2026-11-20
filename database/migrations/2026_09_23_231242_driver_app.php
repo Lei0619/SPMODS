@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('license_number')->unique();
             $table->string('license_type');
             $table->date('license_expiry_date');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
