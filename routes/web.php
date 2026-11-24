@@ -22,8 +22,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'role:admin'])
     ->prefix('driver-app')
     ->group(function () {
-        Route::get('/', [DriverAppController::class, 'index'])
-            ->name('driver-app.index');
+        Route::get('/admin/driver-applications', [DriverAppController::class, 'index'])
+            ->name('admin.driver-applications.index');
         Route::get('/create', [DriverAppController::class, 'create'])
             ->name('driver-app.create');
         Route::post('/', [DriverAppController::class, 'store'])
@@ -39,26 +39,32 @@ Route::middleware(['auth', 'role:admin'])
     });
 
 // admin dashboard routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
-    Route::get('/admin/driver-applications', function () {
-        return Inertia::render('admin/Driver Application/driver-applications');
-    })->name('admin.driver-applications.index');
-    Route::get('/admin/driver-applications/{driverApp}', [DashboardController::class, 'show'])
-        ->name('admin.driver-applications.show');
-});
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('driver-app')
+    ->group(function () {
+        Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+            ->name('admin.dashboard');
+        //     Route::get('/admin/driver-applications', function () {
+        //     return Inertia::render('admin/Driver Application/driver-applications');
+        // })->name('admin.driver-applications.index');
+        Route::get('/admin/driver-applications/create', function () {
+            return Inertia::render('admin/Driver Application/Create');
+        })->name('admin.driver-applications.create');
+        Route::get('/admin/driver-applications/{driverApp}', [DashboardController::class, 'show'])
+            ->name('admin.driver-applications.show');
+    });
 
 // admin's vehicle routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/vehicles', [VehicleController::class, 'index'])
-        ->name('vehicles.index');
-    Route::get('/vehicles/create', function () {
-        return Inertia::render('Vehicles/Create');
-    })->name('vehicles.create');
-    Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
-        ->name('vehicles.edit');
-});
+Route::middleware(['auth', 'role:admin'])
+    ->group(function () {
+        Route::get('/vehicles', [VehicleController::class, 'index'])
+            ->name('vehicles.index');
+        Route::get('/vehicles/create', function () {
+            return Inertia::render('Vehicles/Create');
+        })->name('vehicles.create');
+        Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
+            ->name('vehicles.edit');
+    });
 
 // admin's notification routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
