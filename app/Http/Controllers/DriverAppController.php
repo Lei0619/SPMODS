@@ -26,8 +26,8 @@ class DriverAppController extends Controller
                     'license_type',
                     'license_expiry_date',
                     'status',
-                    'created_at'
-                ])
+                    'created_at',
+                ]),
         ]);
     }
 

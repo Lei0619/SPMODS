@@ -40,7 +40,7 @@ Route::middleware(['auth', 'role:admin'])
 
 // admin dashboard routes
 Route::middleware(['auth', 'role:admin'])
-->prefix('driver-app')
+    ->prefix('driver-app')
     ->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'index'])
             ->name('admin.dashboard');
@@ -52,19 +52,19 @@ Route::middleware(['auth', 'role:admin'])
         })->name('admin.driver-applications.create');
         Route::get('/admin/driver-applications/{driverApp}', [DashboardController::class, 'show'])
             ->name('admin.driver-applications.show');
-});
+    });
 
 // admin's vehicle routes
 Route::middleware(['auth', 'role:admin'])
-->group(function () {
-    Route::get('/vehicles', [VehicleController::class, 'index'])
-        ->name('vehicles.index');
-    Route::get('/vehicles/create', function () {
-        return Inertia::render('Vehicles/Create');
-    })->name('vehicles.create');
-    Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
-        ->name('vehicles.edit');
-});
+    ->group(function () {
+        Route::get('/vehicles', [VehicleController::class, 'index'])
+            ->name('vehicles.index');
+        Route::get('/vehicles/create', function () {
+            return Inertia::render('Vehicles/Create');
+        })->name('vehicles.create');
+        Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])
+            ->name('vehicles.edit');
+    });
 
 // admin's notification routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
