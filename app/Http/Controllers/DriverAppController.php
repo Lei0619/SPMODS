@@ -15,9 +15,20 @@ class DriverAppController extends Controller
      */
     public function index(): mixed
     {
-        $driverApp = DriverApp::all();
-
-        return response()->json($driverApp);
+        return Inertia::render('admin/Driver Application/driver-applications', [
+            'applications' => DriverApp::query()
+                ->latest()
+                ->get([
+                    'id',
+                    'full_name',
+                    'phone_number',
+                    'license_number',
+                    'license_type',
+                    'license_expiry_date',
+                    'status',
+                    'created_at'
+                ])
+        ]);
     }
 
     /**
