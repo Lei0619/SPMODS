@@ -1,3 +1,6 @@
+import { CButton } from '@coreui/react';
+import { router } from '@inertiajs/react';
+
 type Application = {
     id: number;
     full_name: string;
@@ -38,6 +41,36 @@ export default function DriverApplications({
                         <p className="mt-2 text-sm font-medium">
                             Status: {application.status}
                         </p>
+
+                        {application.status === 'pending' && (
+                            <CButton
+                                color="success"
+                                className="mt-2"
+                                onClick={() =>
+                                    router.patch(
+                                        'admin.driver-applications.approve',
+                                        { id: application.id },
+                                    )
+                                }
+                            >
+                                Approve
+                            </CButton>
+                        )}
+
+                        {application.status === 'pending' && (
+                            <CButton
+                                color="danger"
+                                className="mt-2 ml-2"
+                                onClick={() =>
+                                    router.patch(
+                                        'admin.driver-applications.reject',
+                                        { id: application.id },
+                                    )
+                                }
+                            >
+                                Reject
+                            </CButton>
+                        )}
                     </article>
                 ))
             )}
