@@ -110,6 +110,9 @@ class DriverAppController extends Controller
         return response()->json(['message' => 'Driver app deleted successfully'], 204);
     }
 
+    /**
+     * Approve the specified resource.
+     */
     public function approve(DriverApp $driverApp): RedirectResponse
     {
         DB::transaction(function () use ($driverApp): void {
@@ -123,9 +126,16 @@ class DriverAppController extends Controller
                 ]);
             }
 
+            $application->driver()->create([
+                'license_number' => $application->license_number,
+                'phone_number' => $application->phone_number,
+                'status' => 'approved',
+            ]);
+
             $application->update(['status' => 'approved']);
         });
 
-        return Redirect::back()->with('success', 'Driver application approved.');
+        return Redirect::route('drivers.index')
+            ->with('success', 'Driver application approved.');
     }
 }
