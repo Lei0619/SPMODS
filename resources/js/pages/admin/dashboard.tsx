@@ -104,7 +104,7 @@ export default function Dashboard({ dashboard }: Props) {
                         approvals, rejections, and pending applications.
                     </p>
 
-                    <Link href="/driver-app/admin/driver-applications">
+                    <Link href="/admin/driver-applications">
                         <CButton color="primary">
                             View Driver Applications
                         </CButton>

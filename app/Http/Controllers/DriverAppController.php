@@ -6,6 +6,10 @@ use App\Events\DriverApplicationSubmitted;
 use App\Http\Requests\StoreDriverAppRequest;
 use App\Http\Requests\UpdateDriverAppRequest;
 use App\Models\DriverApp;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class DriverAppController extends Controller
@@ -104,5 +108,24 @@ class DriverAppController extends Controller
         $driverApp->delete();
 
         return response()->json(['message' => 'Driver app deleted successfully'], 204);
+    }
+
+    public function approve(DriverApp $driverApp): RedirectResponse
+    {
+        DB::transaction(function () use ($driverApp): void {
+            $application = DriverApp::query()
+                ->lockForUpdate()
+                ->findOrFail($driverApp->id);
+
+            if ($application->status !== 'pending') {
+                throw ValidationException::withMessages([
+                    'application' => 'Only pending applications can be approved',
+                ]);
+            }
+
+            $application->update(['status' => 'approved']);
+        });
+
+        return Redirect::back()->with('success', 'Driver application approved.');
     }
 }

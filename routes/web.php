@@ -18,40 +18,25 @@ Route::get('/', function () {
 // Exnhancement: Create a middleware to not expose the Admin CRUD routes while using dedicated, authenticated API endpoints for the Admin CRUD operations.
 // This will prevent unauthorized access to the Admin CRUD routes and ensure that only authenticated users can access them.
 
-// driver-app for admin access
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('driver-app')
-    ->group(function () {
-        Route::get('/admin/driver-applications', [DriverAppController::class, 'index'])
-            ->name('admin.driver-applications.index');
-        Route::get('/create', [DriverAppController::class, 'create'])
-            ->name('driver-app.create');
-        Route::post('/', [DriverAppController::class, 'store'])
-            ->name('driver-app.store');
-        Route::get('/{id}', [DriverAppController::class, 'show'])
-            ->name('driver-app.show');
-        Route::get('/{id}/edit', [DriverAppController::class, 'edit'])
-            ->name('driver-app.edit');
-        Route::put('/{id}', [DriverAppController::class, 'update'])
-            ->name('driver-app.update');
-        Route::delete('/{id}', [DriverAppController::class, 'destroy'])
-            ->name('driver-app.destroy');
-    });
-
 // admin dashboard routes
 Route::middleware(['auth', 'role:admin'])
-    ->prefix('driver-app')
     ->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'index'])
             ->name('admin.dashboard');
-        //     Route::get('/admin/driver-applications', function () {
-        //     return Inertia::render('admin/Driver Application/driver-applications');
-        // })->name('admin.driver-applications.index');
+    });
+
+// driver-app for admin access
+Route::middleware(['auth', 'role:admin'])
+    ->group(function () {
+        Route::get('/admin/driver-applications', [DriverAppController::class, 'index'])
+            ->name('admin.driver-applications.index');
         Route::get('/admin/driver-applications/create', function () {
             return Inertia::render('admin/Driver Application/Create');
         })->name('admin.driver-applications.create');
         Route::get('/admin/driver-applications/{driverApp}', [DashboardController::class, 'show'])
             ->name('admin.driver-applications.show');
+
+        // adding update feature for approved and declined driver application.
     });
 
 // admin's vehicle routes
